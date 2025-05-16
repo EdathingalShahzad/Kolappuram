@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kolappuram | Luxury Village Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { 
+              primary: "#B38B59", // Rich gold/bronze
+              secondary: "#3A2E26", // Deep charcoal
+              accent: "#8C6A4D", // Warm brown
+              light: "#F8F5F0", // Cream/off-white
+              dark: "#1E1A16", // Almost black
+              gold: "#D4AF37" // Metallic gold for accents
+            },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+
+      body {
+          font-family: 'Montserrat', sans-serif;
+          color: #3A2E26;
+          overflow-x: hidden;
+          background-color: #F8F5F0;
+      }
+
+      h1, h2, h3, h4, h5 {
+          font-family: 'Playfair Display', serif;
+          font-weight: 600;
+      }
+
+      .navbar {
+          transition: all 0.3s ease;
+          background-color: rgba(248, 245, 240, 0.95);
+          backdrop-filter: blur(10px);
+      }
+
+      .navbar.scrolled {
+          background-color: rgba(248, 245, 240, 0.98) !important;
+          box-shadow: 0 2px 30px rgba(30, 26, 22, 0.1);
+      }
+
+      .service-card {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          border: 1px solid rgba(179, 139, 89, 0.2);
+      }
+
+      .service-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 40px rgba(140, 106, 77, 0.15);
+      }
+
+      .gallery-item {
+          overflow: hidden;
+          position: relative;
+      }
+
+      .gallery-item img {
+          transition: transform 0.5s ease;
+      }
+
+      .gallery-item:hover img {
+          transform: scale(1.05);
+      }
+
+      .gallery-overlay {
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          background: linear-gradient(to top, rgba(30, 26, 22, 0.8), transparent);
+      }
+
+      .gallery-item:hover .gallery-overlay {
+          opacity: 1;
+      }
+
+      .testimonial-slide {
+          opacity: 0;
+          transition: opacity 0.5s ease;
+      }
+
+      .testimonial-slide.active {
+          opacity: 1;
+      }
+
+      .cta-button {
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s ease;
+          background-color: #B38B59;
+          color: white;
+          border: 1px solid #B38B59;
+      }
+
+      .cta-button:hover {
+          background-color: #9C7748;
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(179, 139, 89, 0.3);
+      }
+
+      .room-card {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          border: 1px solid rgba(179, 139, 89, 0.2);
+      }
+
+      .room-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 40px rgba(140, 106, 77, 0.15);
+      }
+
+      .room-overlay {
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          background: rgba(30, 26, 22, 0.6);
+      }
+
+      .room-card:hover .room-overlay {
+          opacity: 1;
+      }
+
+      .parallax {
+          background-attachment: fixed;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+      }
+
+      .social-icon {
+          transition: transform 0.3s ease, color 0.3s ease;
+          border: 1px solid rgba(179, 139, 89, 0.3);
+      }
+
+      .social-icon:hover {
+          transform: translateY(-3px);
+          background-color: #B38B59;
+          color: white;
+          border-color: #B38B59;
+      }
+
+      /* Luxury border accents */
+      .luxury-border {
+          position: relative;
+      }
+
+      .luxury-border:after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+          width: 60px;
+          height: 3px;
+          background-color: #B38B59;
+      }
+
+      /* Gold accent text */
+      .gold-accent {
+          color: #D4AF37;
+      }
+
+      /* Section backgrounds */
+      .section-light {
+          background-color: #F8F5F0;
+      }
+
+      .section-dark {
+          background-color: #3A2E26;
+          color: white;
+      }
+
+      .section-dark h2, 
+      .section-dark h3,
+      .section-dark h4,
+      .section-dark .gold-accent {
+          color: #D4AF37;
+      }
+
+      /* Form styling */
+      .luxury-input {
+          background-color: rgba(248, 245, 240, 0.8);
+          border: 1px solid rgba(179, 139, 89, 0.3);
+          transition: all 0.3s ease;
+      }
+
+      .luxury-input:focus {
+          outline: none;
+          border-color: #B38B59;
+          box-shadow: 0 0 0 3px rgba(179, 139, 89, 0.2);
+      }
+
+      /* Button styling */
+      .btn-outline-gold {
+          border: 1px solid #D4AF37;
+          color: #D4AF37;
+          background: transparent;
+      }
+
+      .btn-outline-gold:hover {
+          background-color: #D4AF37;
+          color: white;
+      }
+
+      /* Card styling */
+      .luxury-card {
+          background: white;
+          border: 1px solid rgba(179, 139, 89, 0.2);
+          box-shadow: 0 5px 30px rgba(30, 26, 22, 0.05);
+          transition: all 0.3s ease;
+      }
+
+      .luxury-card:hover {
+          box-shadow: 0 15px 40px rgba(30, 26, 22, 0.1);
+      }
+
+      /* Mobile Menu Styles */
+      .mobile-menu {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          background-color: #F8F5F0;
+          z-index: 40;
+          transform: translateX(-100%);
+          transition: transform 0.3s ease-out;
+          overflow-y: auto;
+      }
+
+      .mobile-menu.open {
+          transform: translateX(0);
+      }
+
+      .menu-toggle {
+          display: none;
+      }
+
+      @media (max-width: 767px) {
+          .menu-toggle {
+              display: block;
+              z-index: 50;
+          }
+          
+          .hero h1 {
+              font-size: 2.5rem;
+              line-height: 1.2;
+          }
+          
+          .hero p {
+              font-size: 1rem;
+          }
+          
+          .service-card, .room-card {
+              margin-bottom: 1.5rem;
+          }
+          
+          .gallery-grid {
+              grid-template-columns: 1fr;
+          }
+          
+          .booking-section {
+              flex-direction: column;
+          }
+          
+          .testimonial-slide {
+              padding: 1rem;
+          }
+      }
+
+      @media (min-width: 768px) and (max-width: 1023px) {
+          .service-card, .room-card {
+              margin-bottom: 1.5rem;
+          }
+          
+          .gallery-grid {
+              grid-template-columns: repeat(2, 1fr);
+          }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar fixed top-0 left-0 w-full z-50 py-4 px-6">
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="#" class="text-3xl font-bold text-primary">KOLAPPURAM</a>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#about" class="text-secondary hover:text-primary transition-colors">About</a>
+          <a href="#rooms" class="text-secondary hover:text-primary transition-colors">Hotels</a>
+          <a href="#amenities" class="text-secondary hover:text-primary transition-colors">Amenities</a>
+          <a href="#gallery" class="text-secondary hover:text-primary transition-colors">Gallery</a>
+          <a href="#testimonials" class="text-secondary hover:text-primary transition-colors">Testimonials</a>
+          <a href="#contact" class="text-secondary hover:text-primary transition-colors">Contact</a>
+          <button class="bg-primary text-white px-6 py-2 rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap cta-button">
+            Book Now
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="md:hidden w-10 h-10 flex items-center justify-center menu-toggle">
+          <i class="ri-menu-line text-secondary text-2xl"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="flex justify-end p-6">
+        <button id="mobile-menu-close" class="w-10 h-10 flex items-center justify-center">
+          <i class="ri-close-line text-secondary text-2xl"></i>
+        </button>
+      </div>
+      <div class="flex flex-col items-center space-y-6 mt-10 px-6">
+        <a href="#about" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">About</a>
+        <a href="#rooms" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Hotels</a>
+        <a href="#amenities" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Amenities</a>
+        <a href="#gallery" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Gallery</a>
+        <a href="#testimonials" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Testimonials</a>
+        <a href="#contact" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Contact</a>
+        <button class="bg-primary text-white px-8 py-3 rounded-button mt-6 whitespace-nowrap w-full max-w-xs">
+          Book Now
+        </button>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen overflow-hidden hero">
+      <div class="absolute inset-0" style="background-image: url(./ChatGPT\ Image\ May\ 15\,\ 2025\,\ 12_20_01\ PM.png); background-size: cover; background-position: center;"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-black/10"></div>
+
+      <div class="container mx-auto h-full flex items-center">
+        <div class="relative z-10 max-w-2xl px-6 md:px-0 text-white fade-in">
+          <h1 class="text-4xl md:text-6xl font-semibold leading-tight mb-6">
+            Discover <span class="gold-accent">Kolappuram</span><br> Where Tradition Meets Luxury
+          </h1>
+          <p class="text-lg md:text-xl mb-8 text-gray-200">
+            Experience the serene beauty of Kerala's hidden gem with unparalleled comfort and sophistication.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <button class="cta-button px-8 py-3 rounded-button">
+              Explore Kolappuram
+            </button>
+            <button class="btn-outline-gold px-8 py-3 rounded-button">
+              View Gallery
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white">
+        <span class="text-sm mb-2">Scroll to discover</span>
+        <div class="w-8 h-12 border-2 border-white rounded-full flex justify-center">
+          <div class="w-1.5 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 section-light" style="background-color: #ffdd6c63;">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Welcome to Kolappuram</h2>
+          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
+            Nestled in the heart of Kerala's Malappuram district, Kolappuram offers a unique blend of traditional charm and modern luxury. Our carefully curated experiences bring you the best of this serene village.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div class="slide-up">
+            <div class="relative overflow-hidden rounded-lg shadow-xl">
+              <img
+                src="./ChatGPT Image May 15, 2025, 12_20_01 PM.png"
+                class="w-full h-auto object-cover rounded-lg"
+              />
+              <div class="absolute inset-0 border-8 border-white opacity-20 pointer-events-none"></div>
+            </div>
+          </div>
+
+          <div class="slide-up">
+            <h3 class="text-3xl font-semibold mb-6">Our Story</h3>
+            <p class="text-gray-700 mb-6">
+              Kolappuram is a peaceful village in Malappuram district, Kerala, known for its lush landscapes and rich cultural heritage. While little is documented about its specific history, it shares in Kerala's storied past and the legacy of the Malabar region.
+            </p>
+            <p class="text-gray-700 mb-8">
+              Today, we've carefully selected the finest accommodations and experiences in Kolappuram to bring you luxury amidst authentic village life. Our philosophy combines impeccable service with the natural beauty of this special place.
+            </p>
+
+            <div class="grid grid-cols-2 gap-6">
+              <div class="flex items-center">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                  <i class="ri-user-3-line text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Population</h4>
+                  <p class="text-sm text-gray-600">35,534 residents</p>
+                </div>
+              </div>
+
+              <div class="flex items-center">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                  <i class="ri-community-line text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Community</h4>
+                  <p class="text-sm text-gray-600">Warm & welcoming</p>
+                </div>
+              </div>
+
+              <div class="flex items-center">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                  <i class="ri-restaurant-line text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Cuisine</h4>
+                  <p class="text-sm text-gray-600">Authentic Kerala flavors</p>
+                </div>
+              </div>
+
+              <div class="flex items-center">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                  <i class="ri-leaf-line text-primary text-xl"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold">Nature</h4>
+                  <p class="text-sm text-gray-600">Lush green landscapes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20 bg-white" style="background-color: #ffdd6c63;">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Kolappuram Highlights</h2>
+          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
+            Discover the finest experiences Kolappuram has to offer, carefully selected for the discerning traveler.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="service-card luxury-card rounded-lg overflow-hidden">
+            <div class="h-64 overflow-hidden">
+              <img
+                src="./WhatsApp Image 2025-05-15 at 1.34.46 PM.jpeg"
+                alt="Dosthana Club"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Dosthana Club</h3>
+              <p class="text-gray-600 mb-4">
+                Founded in 1972, this community hub promotes sports and culture, celebrating 50 years with vibrant events.
+              </p>
+              <a href="#" class="text-primary flex items-center font-medium hover:underline">
+                Explore <i class="ri-arrow-right-line ml-2"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="service-card luxury-card rounded-lg overflow-hidden">
+            <div class="h-64 overflow-hidden">
+              <img
+                src="./WhatsApp Image 2025-05-15 at 1.44.44 PM.jpeg"
+                alt="Thandoor Hut"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Thandoor Hut</h3>
+              <p class="text-gray-600 mb-4">
+                Renowned for its tandoori specialties and biryanis, offering dine-in and delivery with excellent reviews.
+              </p>
+              <a href="#" class="text-primary flex items-center font-medium hover:underline">
+                View Menu <i class="ri-arrow-right-line ml-2"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="service-card luxury-card rounded-lg overflow-hidden">
+            <div class="h-64 overflow-hidden">
+              <img
+                src="./WhatsApp Image 2025-05-15 at 1.59.48 PM.jpeg"
+                alt="Madrasa"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Nibrasul Islam Madrasa</h3>
+              <p class="text-gray-600 mb-4">
+                A center for Arabic and Islamic studies that actively supports community religious events.
+              </p>
+              <a href="#" class="text-primary flex items-center font-medium hover:underline">
+                Learn More <i class="ri-arrow-right-line ml-2"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="service-card luxury-card rounded-lg overflow-hidden">
+            <div class="h-64 overflow-hidden">
+              <img
+                src="./ChatGPT Image May 16, 2025, 10_54_53 AM.png"
+                alt="School"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">GHS Kolappuram</h3>
+              <p class="text-gray-600 mb-4">
+                Established in 1924, this government school serves 900 students with strong academics and cultural programs.
+              </p>
+              <a href="#" class="text-primary flex items-center font-medium hover:underline">
+                Discover <i class="ri-arrow-right-line ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rooms Section -->
+    <section id="rooms" class="py-20 section-light" style="background-color: #ffdd6c63;">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Premium Accommodations</h2>
+          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
+            Experience Kolappuram in comfort and style at our carefully selected premium hotels.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="room-card luxury-card rounded-lg overflow-hidden">
+            <div class="relative h-80">
+              <img
+                src="./WhatsApp Image 2025-05-15 at 1.44.44 PM.jpeg"
+                alt="Thandoor Hut"
+                class="w-full h-full object-cover"
+              />
+              <div class="room-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
+                <button class="btn-outline-gold px-6 py-2 rounded-button">
+                  View Details
+                </button>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-3">
+                <h3 class="text-xl font-semibold">Thandoor Hut</h3>
+                <span class="text-primary font-semibold">₹4,500 / night</span>
+              </div>
+              <p class="text-gray-600 mb-4">
+                A popular local eatery known for its delicious grilled and tandoori dishes, offering authentic flavors in a cozy atmosphere.
+              </p>
+              <div class="flex flex-wrap gap-3">
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Restaurant</span>
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Free WiFi</span>
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">AC</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="room-card luxury-card rounded-lg overflow-hidden">
+            <div class="relative h-80">
+              <img
+                src="./WhatsApp Image 2025-05-16 at 10.11.12_db344e04.jpg"
+                alt="Hilux Hotel"
+                class="w-full h-full object-cover"
+              />
+              <div class="room-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
+                <button class="btn-outline-gold px-6 py-2 rounded-button">
+                  View Details
+                </button>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-3">
+                <h3 class="text-xl font-semibold">Hilux Hotel</h3>
+                <span class="text-primary font-semibold">₹9,500 / night</span>
+              </div>
+              <p class="text-gray-600 mb-4">
+                A well-established hotel providing comfortable accommodation and friendly service, favored for its clean rooms and good hospitality.
+              </p>
+              <div class="flex flex-wrap gap-3">
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Luxury Rooms</span>
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Restaurant</span>
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Pool</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="room-card luxury-card rounded-lg overflow-hidden">
+            <div class="relative h-80">
+              <img
+                src="./WhatsApp Image 2025-05-16 at 10.11.11_5a6a527b.jpg"
+                alt="AL-Farooj"
+                class="w-full h-full object-cover"
+              />
+              <div class="room-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
+                <button class="btn-outline-gold px-6 py-2 rounded-button">
+                  View Details
+                </button>
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-center mb-3">
+                <h3 class="text-xl font-semibold">AL-Farooj</h3>
+                <span class="text-primary font-semibold">₹3,500 / night</span>
+              </div>
+              <p class="text-gray-600 mb-4">
+                Famous for Middle Eastern and Indian fast food, especially shawarmas and grilled dishes, with a vibrant ambiance.
+              </p>
+              <div class="flex flex-wrap gap-3">
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Fast Food</span>
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Dine-in</span>
+                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Takeaway</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <button class="cta-button px-8 py-3 rounded-button">
+            View All Accommodations
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kolappuram Place Info Section -->
+    <section id="kolappuram-info" class="py-20 section-dark" >
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Discover Kolappuram</h2>
+          <p class="text-gray-300 max-w-3xl mx-auto mt-8">
+            Experience the vibrant culture, natural beauty, and warm community spirit of this Kerala gem.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Nature & Landscape -->
+          <div class="bg-secondary/50 p-8 rounded-lg">
+            <h3 class="text-2xl font-semibold mb-6 text-center gold-accent">Nature & Landscape</h3>
+            <div class="space-y-5">
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-leaf-line gold-accent"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1 text-white">Lush Greenery</h4>
+                  <p class="text-gray-300 text-sm">
+                    Kolappuram is surrounded by rich greenery and scenic paddy fields that change with the seasons.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-water-line gold-accent"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1 text-white">Waterways</h4>
+                  <p class="text-gray-300 text-sm">
+                    Serene rivers and ponds add to the peaceful village atmosphere, perfect for quiet reflection.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-landscape-line gold-accent"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1 text-white">Scenic Views</h4>
+                  <p class="text-gray-300 text-sm">
+                    Rolling hills and open fields offer beautiful vistas that capture the essence of rural Kerala.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Culture & Community -->
+          <div class="bg-secondary/50 p-8 rounded-lg">
+            <h3 class="text-2xl font-semibold mb-6 text-center gold-accent">Culture & Community</h3>
+            <div class="space-y-5">
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-group-line gold-accent"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1 text-white">Warm Hospitality</h4>
+                  <p class="text-gray-300 text-sm">
+                    Friendly locals proud of their traditions welcome visitors with genuine Kerala hospitality.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-calendar-event-line gold-accent"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1 text-white">Festivals</h4>
+                  <p class="text-gray-300 text-sm">
+                    Colorful celebrations reflecting the cultural heritage of Malabar throughout the year.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-restaurant-2-line gold-accent"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1 text-white">Culinary Traditions</h4>
+                  <p class="text-gray-300 text-sm">
+                    Authentic local dishes prepared with fresh ingredients and traditional techniques.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recreation & Activities -->
+          <div class="bg-secondary/50 p-8 rounded-lg">
+            <h3 class="text-2xl font-semibold mb-6 text-center gold-accent">Experiences</h3>
+            <div class="space-y-5">
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-walk-line gold-accent"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1 text-white">Village Walks</h4>
+                  <p class="text-gray-300 text-sm">
+                    Peaceful trails through paddy fields and coconut groves, perfect for nature lovers.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-cup-line gold-accent"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1 text-white">Tea Stalls</h4>
+                  <p class="text-gray-300 text-sm">
+                    Experience local life at traditional chayakadas serving Kerala tea and snacks.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-artboard-2-line gold-accent"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1 text-white">Handicrafts</h4>
+                  <p class="text-gray-300 text-sm">
+                    Discover local artisans creating traditional crafts and handloom products.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 section-light" style="background-color: #ffdd6c63;">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Kolappuram Gallery</h2>
+          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
+            Explore the beauty and elegance of Kolappuram through our curated collection of images.
+          </p>
+        </div>
+
+        <div class="flex justify-center mb-10">
+          <div class="inline-flex bg-gray-100 p-1 rounded-full">
+            <button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap">
+              Places to Stay
+            </button>
+            <button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap">
+              Food & Dining
+            </button>
+            <button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap">
+              Local Life
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+            <div class="relative">
+              <img
+                src="./WhatsApp Image 2025-05-16 at 11.03.31_ce716a60.jpg"
+                               alt="Village Scene"
+                class="w-full h-72 object-cover"
+              />
+              <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
+                <div class="text-white text-center">
+                  <i class="ri-zoom-in-line text-3xl mb-2"></i>
+                  <h4 class="font-semibold">Village Life</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+            <div class="relative">
+              <img
+                src="./WhatsApp Image 2025-05-16 at 11.34.42_2e6a5536.jpg"
+                alt="Local Cuisine"
+                class="w-full h-72 object-cover"
+              />
+              <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
+                <div class="text-white text-center">
+                  <i class="ri-zoom-in-line text-3xl mb-2"></i>
+                  <h4 class="font-semibold">Local Delicacies</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+            <div class="relative">
+              <img
+                src="./WhatsApp Image 2025-05-16 at 11.03.31_53f29576.jpg"
+                alt="Traditional House"
+                class="w-full h-72 object-cover"
+              />
+              <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
+                <div class="text-white text-center">
+                  <i class="ri-zoom-in-line text-3xl mb-2"></i>
+                  <h4 class="font-semibold">Heritage Home</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+            <div class="relative">
+              <img
+                src="./WhatsApp Image 2025-05-16 at 11.03.30_1db69e65.jpg"
+                alt="Paddy Fields"
+                class="w-full h-72 object-cover"
+              />
+              <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
+                <div class="text-white text-center">
+                  <i class="ri-zoom-in-line text-3xl mb-2"></i>
+                  <h4 class="font-semibold">Green Fields</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+            <div class="relative">
+              <img
+                src="./WhatsApp Image 2025-05-16 at 11.03.29_c8b8454b.jpg"
+                alt="Temple"
+                class="w-full h-72 object-cover"
+              />
+              <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
+                <div class="text-white text-center">
+                  <i class="ri-zoom-in-line text-3xl mb-2"></i>
+                  <h4 class="font-semibold">Sacred Spaces</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+            <div class="relative">
+              <img
+                src="./WhatsApp Image 2025-05-16 at 11.03.29_2ead620b.jpg"
+                alt="Sunset"
+                class="w-full h-72 object-cover"
+              />
+              <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
+                <div class="text-white text-center">
+                  <i class="ri-zoom-in-line text-3xl mb-2"></i>
+                  <h4 class="font-semibold">Golden Hour</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <button class="cta-button px-8 py-3 rounded-button">
+            View Full Gallery
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kolappuram Highlights Section -->
+    <section id="kolappuram" class="py-20 section-dark">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Traveler Experiences</h2>
+          <p class="text-gray-300 max-w-3xl mx-auto mt-8">
+            Hear what our visitors say about their time in Kolappuram
+          </p>
+        </div>
+
+        <div class="relative max-w-4xl mx-auto">
+          <div class="kolappuram-slide active">
+            <div class="bg-secondary/50 p-8 md:p-12 rounded-lg">
+              <div class="flex flex-col md:flex-row items-center mb-6">
+                <div class="w-20 h-20 rounded-full overflow-hidden mb-4 md:mb-0 md:mr-6 border-2 border-primary">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQINVyZtwl6OTECc562qvJebhZHX-2QT2ouMg&s"
+                    alt="Sarah Johnson"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class="text-center md:text-left">
+                  <h4 class="text-xl font-semibold text-white">Riyas K </h4>
+                  <p class="text-gray-400">Malappuram</p>
+                  <div class="flex justify-center md:justify-start mt-2 text-gold">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="text-gray-300 text-lg italic">
+                "Kolappuram exceeded all my expectations. The blend of authentic village life with comfortable accommodations was perfect. Waking up to the sound of birds and the smell of fresh Kerala breakfast was unforgettable. The locals were incredibly welcoming."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center mt-8">
+          <div class="flex space-x-2">
+            <button class="w-3 h-3 rounded-full bg-primary"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-600"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-600"></button>
+            <button class="w-3 h-3 rounded-full bg-gray-600"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="py-20 section-light" style="background-color: #ffdd6c63;">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 class="text-4xl font-semibold mb-6 luxury-border inline-block pb-2">Plan Your Visit</h2>
+            <p class="text-gray-600 mb-8">
+              Reserve your stay in Kolappuram and experience the perfect blend of Kerala tradition and modern comfort.
+            </p>
+
+            <div class="bg-white p-8 rounded-lg shadow-md">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="block text-gray-700 mb-2">Check-in Date</label>
+                  <div class="relative">
+                    <input
+                      type="date"
+                      class="w-full p-3 luxury-input rounded"
+                      min="2025-05-16"
+                    />
+                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                      <i class="ri-calendar-line text-gray-500"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-gray-700 mb-2">Check-out Date</label>
+                  <div class="relative">
+                    <input
+                      type="date"
+                      class="w-full p-3 luxury-input rounded"
+                      min="2025-05-17"
+                    />
+                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                      <i class="ri-calendar-line text-gray-500"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-gray-700 mb-2">Adults</label>
+                  <div class="relative">
+                    <select class="w-full p-3 luxury-input rounded appearance-none">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                    </select>
+                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                      <i class="ri-arrow-down-s-line text-gray-500"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-gray-700 mb-2">Children</label>
+                  <div class="relative">
+                    <select class="w-full p-3 luxury-input rounded appearance-none">
+                      <option>0</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                      <i class="ri-arrow-down-s-line text-gray-500"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2">Accommodation Type</label>
+                <div class="relative">
+                  <select class="w-full p-3 luxury-input rounded appearance-none">
+                    <option>Premium Hotel Room</option>
+                    <option>Heritage Homestay</option>
+                    <option>Luxury Villa</option>
+                    <option>Traditional Houseboat</option>
+                  </select>
+                  <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <i class="ri-arrow-down-s-line text-gray-500"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2">Special Requests</label>
+                <textarea
+                  class="w-full p-3 luxury-input rounded focus:outline-none focus:border-primary h-24"
+                  placeholder="Dietary needs, accessibility requirements, etc."
+                ></textarea>
+              </div>
+
+              <button class="w-full cta-button py-3 rounded-button">
+                Check Availability
+              </button>
+            </div>
+          </div>
+
+          <div class="relative h-full min-h-[500px] rounded-lg overflow-hidden shadow-xl">
+            <img
+              src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+              alt="Kolappuram Landscape"
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8">
+              <div class="text-white">
+                <h3 class="text-2xl font-semibold mb-2">Special Experience</h3>
+                <p class="mb-4 text-gray-200">
+                  Book a 5-night stay and receive a complimentary traditional Kerala massage and sunset village walk.
+                </p>
+                <button class="btn-outline-gold px-6 py-2 rounded-button">
+                  Learn More
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white" style="background-color: #ffdd6c63;">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Contact Us</h2>
+          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
+            Have questions or need assistance? Our team is here to help you plan your perfect Kolappuram experience.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div class="luxury-card p-8 rounded-lg">
+            <h3 class="text-xl font-semibold mb-6">Kolappuram Information</h3>
+
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-map-pin-line text-primary"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1">Location</h4>
+                  <p class="text-gray-600">
+                    Malappuram district, Kerala<br>
+                    Near NH 66, between Tirur and Kottakkal
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-phone-line text-primary"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1">Phone</h4>
+                  <p class="text-gray-600">
+                    Reservations: +91 93884 03220<br>
+                    Information: +91 98950 12345
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="ri-mail-line text-primary"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold mb-1">Email</h4>
+                  <p class="text-gray-600">
+                    info@kolappuramelegance.com<br>
+                    reservations@kolappuramelegance.com
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <h4 class="font-semibold mb-4">Follow Our Journey</h4>
+              <div class="flex space-x-4">
+                <a href="https://www.facebook.com/share/18rnEd5ikY/" class="social-icon">
+                  <i class="ri-facebook-fill"></i>
+                </a>
+                <a href="https://www.instagram.com/kolappuram_live?igsh=cWVkZ2NycGhwZ25t" class="social-icon">
+                  <i class="ri-instagram-line"></i>
+                </a>
+                <a href="#" class="social-icon">
+                  <i class="ri-twitter-x-line"></i>
+                </a>
+                <a href="#" class="social-icon">
+                  <i class="ri-youtube-line"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 luxury-card p-8 rounded-lg">
+            <h3 class="text-xl font-semibold mb-6">Send Us a Message</h3>
+
+            <form>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="block text-gray-700 mb-2">First Name</label>
+                  <input
+                    type="text"
+                    class="w-full p-3 luxury-input rounded"
+                    placeholder="Your first name"
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-gray-700 mb-2">Last Name</label>
+                  <input
+                    type="text"
+                    class="w-full p-3 luxury-input rounded"
+                    placeholder="Your last name"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label class="block text-gray-700 mb-2">Email</label>
+                  <input
+                    type="email"
+                    class="w-full p-3 luxury-input rounded"
+                    placeholder="Your email address"
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-gray-700 mb-2">Phone</label>
+                  <input
+                    type="tel"
+                    class="w-full p-3 luxury-input rounded"
+                    placeholder="Your phone number"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2">Subject</label>
+                <select class="w-full p-3 luxury-input rounded appearance-none">
+                  <option>Reservation Inquiry</option>
+                  <option>Experience Planning</option>
+                  <option>Group Booking</option>
+                  <option>General Information</option>
+                  <option>Media Inquiry</option>
+                </select>
+              </div>
+
+              <div class="mb-6">
+                <label class="block text-gray-700 mb-2">Message</label>
+                <textarea
+                  class="w-full p-3 luxury-input rounded h-32"
+                  placeholder="How can we assist you?"
+                ></textarea>
+              </div>
+
+              <div class="mb-6">
+                <label class="custom-checkbox flex items-start">
+                  <input type="checkbox" class="mt-1" />
+                  <span class="checkmark"></span>
+                  <span class="ml-8 text-gray-700">
+                    I agree to receive updates about Kolappuram experiences and special offers.
+                  </span>
+                </label>
+              </div>
+
+              <button class="cta-button px-8 py-3 rounded-button">
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="h-96 relative">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3931.818990183358!2d75.9726840748449!3d11.027016854147692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba655ad14ddc067%3A0xd0b51b91d7c6b9f4!2sKolappuram%2C%20Kerala%20676305!5e0!3m2!1sen!2sin!4v1715866920202!5m2!1sen!2sin" 
+        width="100%" 
+        height="100%" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div class="absolute inset-0 pointer-events-none border-8 border-white opacity-20"></div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 section-dark">
+      <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-semibold mb-4 gold-accent">
+            Join Our Community
+          </h2>
+          <p class="mb-8 text-gray-300">
+            Subscribe to receive exclusive offers, insider tips, and the latest news about Kolappuram experiences.
+          </p>
+
+          <form class="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+            <input
+              type="email"
+              placeholder="Your email address"
+              class="flex-grow p-3 rounded-lg border-none focus:outline-none text-gray-800"
+            />
+            <button
+              class="bg-primary text-white px-6 py-3 rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white pt-16 pb-8">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <div>
+            <h3 class="text-2xl font-bold text-white mb-6">KOLAPPURAM</h3>
+            <p class="text-gray-400 mb-6">
+              Curating exceptional experiences in Kerala's hidden gem, blending tradition with luxury.
+            </p>
+            <div class="flex space-x-4">
+              <a href="https://www.facebook.com/share/18rnEd5ikY/" class="social-icon">
+                <i class="ri-facebook-fill"></i>
+              </a>
+              <a href="https://www.instagram.com/kolappuram_live?igsh=cWVkZ2NycGhwZ25t" class="social-icon">
+                <i class="ri-instagram-line"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="ri-twitter-x-line"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="ri-youtube-line"></i>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-6 gold-accent">Quick Links</h4>
+            <ul class="space-y-3">
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Kolappuram</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Accommodations</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Dining Experiences</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cultural Activities</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Gallery</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-6 gold-accent">Contact</h4>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <i class="ri-map-pin-line text-primary mr-3 mt-1"></i>
+                <span class="text-gray-400">
+                  Kolappuram, AR Nagar P.O,<br>Malappuram, Kerala – 676305
+                </span>
+              </li>
+              <li class="flex items-start">
+                <i class="ri-phone-line text-primary mr-3 mt-1"></i>
+                <span class="text-gray-400">+91 93884 03220</span>
+              </li>
+              <li class="flex items-start">
+                <i class="ri-mail-line text-primary mr-3 mt-1"></i>
+                <span class="text-gray-400">info@kolappuramelegance.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-6 gold-accent">Explore Kerala</h4>
+            <ul class="space-y-3">
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Malappuram District</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Backwaters</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Ayurveda Retreats</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Kerala Cuisine</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Festivals</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Travel Tips</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-700 mt-12 pt-8">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-500 mb-4 md:mb-0">
+              © 2025 Kolappuram Elegance. All rights reserved.
+            </p>
+            <div class="flex space-x-6">
+              <a href="#" class="text-gray-500 hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" class="text-gray-500 hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" class="text-gray-500 hover:text-white transition-colors">Sitemap</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button
+      class="fixed bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300"
+      id="backToTop"
+    >
+      <i class="ri-arrow-up-line text-xl"></i>
+    </button>
+
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        
+        mobileMenuToggle.addEventListener('click', function() {
+          mobileMenu.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+        
+        mobileMenuClose.addEventListener('click', function() {
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+        
+        // Close menu when clicking on links
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+          });
+        });
+
+        // Sticky Navbar
+        const navbar = document.querySelector(".navbar");
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 50) {
+            navbar.classList.add("scrolled");
+          } else {
+            navbar.classList.remove("scrolled");
+          }
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById("backToTop");
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 300) {
+            backToTopButton.classList.add("opacity-100");
+            backToTopButton.classList.remove("invisible");
+          } else {
+            backToTopButton.classList.remove("opacity-100");
+            backToTopButton.classList.add("invisible");
+          }
+        });
+
+        backToTopButton.addEventListener("click", function () {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
+
+        // Smooth Scroll for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+
+        // Gallery Lightbox
+        const galleryItems = document.querySelectorAll(".gallery-item");
+        const lightbox = document.querySelector(".lightbox");
+        const lightboxImg = lightbox.querySelector("img");
+        const lightboxClose = document.querySelector(".lightbox-close");
+
+        galleryItems.forEach((item) => {
+          item.addEventListener("click", function () {
+            const imgSrc = this.querySelector("img").src;
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add("active");
+            document.body.style.overflow = "hidden";
+          });
+        });
+
+        lightboxClose.addEventListener("click", function () {
+          lightbox.classList.remove("active");
+          document.body.style.overflow = "";
+        });
+
+        lightbox.addEventListener("click", function (e) {
+          if (e.target === lightbox) {
+            lightbox.classList.remove("active");
+            document.body.style.overflow = "";
+          }
+        });
+
+        // Testimonial slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.kolappuram-slide');
+        const dots = document.querySelectorAll('#testimonial-dots button');
+        
+        function showSlide(n) {
+          slides.forEach(slide => slide.classList.remove('active'));
+          dots.forEach(dot => dot.classList.remove('bg-primary'));
+          
+          currentSlide = (n + slides.length) % slides.length;
+          slides[currentSlide].classList.add('active');
+          dots[currentSlide].classList.add('bg-primary');
+        }
+        
+        // Auto-rotate testimonials
+        setInterval(() => {
+          showSlide(currentSlide + 1);
+        }, 5000);
+      });
+    </script>
+  </body>
+</html>
