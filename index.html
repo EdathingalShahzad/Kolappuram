@@ -14,6 +14,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
     />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script>
       tailwind.config = {
@@ -39,11 +40,35 @@
               full: "9999px",
               button: "8px",
             },
+            animation: {
+              'fade-in': 'fadeIn 1s ease-in-out',
+              'slide-up': 'slideUp 0.8s ease-out',
+              'pulse-slow': 'pulse 6s infinite',
+              'float': 'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(30px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              }
+            }
           },
         },
       };
     </script>
     <style>
+      :root {
+        --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #B38B59 50%, #8C6A4D 100%);
+      }
+      
       :where([class^="ri-"])::before { content: "\f3c2"; }
 
       body {
@@ -51,6 +76,7 @@
           color: #3A2E26;
           overflow-x: hidden;
           background-color: #F8F5F0;
+          scroll-behavior: smooth;
       }
 
       h1, h2, h3, h4, h5 {
@@ -82,6 +108,7 @@
       .gallery-item {
           overflow: hidden;
           position: relative;
+          border-radius: 16px;
       }
 
       .gallery-item img {
@@ -177,12 +204,18 @@
           left: 0;
           width: 60px;
           height: 3px;
-          background-color: #B38B59;
+          background: var(--gold-gradient);
       }
 
       /* Gold accent text */
       .gold-accent {
           color: #D4AF37;
+      }
+      
+      .text-gradient {
+          background: var(--gold-gradient);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
       }
 
       /* Section backgrounds */
@@ -220,6 +253,7 @@
           border: 1px solid #D4AF37;
           color: #D4AF37;
           background: transparent;
+          transition: all 0.3s ease;
       }
 
       .btn-outline-gold:hover {
@@ -237,6 +271,14 @@
 
       .luxury-card:hover {
           box-shadow: 0 15px 40px rgba(30, 26, 22, 0.1);
+      }
+      
+      .gold-bg {
+          background: var(--gold-gradient);
+      }
+      
+      .gold-texture {
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyMTEsIDE3MSwgODksIDAuMDUpIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+');
       }
 
       /* Mobile Menu Styles */
@@ -259,6 +301,42 @@
 
       .menu-toggle {
           display: none;
+      }
+      
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+          width: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+          background: #F8F5F0;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+          background: #B38B59;
+          border-radius: 4px;
+      }
+      
+      /* Floating animation */
+      .floating {
+          animation: float 6s ease-in-out infinite;
+      }
+      
+      /* Pulse animation for CTA elements */
+      .pulse-gold {
+          animation: pulse-slow 4s infinite;
+      }
+      
+      @keyframes pulse-gold {
+          0% {
+              box-shadow: 0 0 0 0 rgba(211, 175, 55, 0.4);
+          }
+          70% {
+              box-shadow: 0 0 0 15px rgba(211, 175, 55, 0);
+          }
+          100% {
+              box-shadow: 0 0 0 0 rgba(211, 175, 55, 0);
+          }
       }
 
       @media (max-width: 767px) {
@@ -308,20 +386,39 @@
     <!-- Navbar -->
     <nav class="navbar fixed top-0 left-0 w-full z-50 py-4 px-6">
       <div class="container mx-auto flex justify-between items-center">
-        <a href="#home" class="text-3xl font-bold text-primary">KOLAPPURAM</a>
+        <a href="#home" class="text-3xl font-bold text-primary flex items-center">
+          <span class="text-secondary">KOLAPPURAM</span>
+          <span class="w-2 h-2 bg-primary rounded-full mx-2"></span>
+
+        </a>
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-8">
-           <a href="#home" class="text-secondary hover:text-primary transition-colors">Home</a>
-          <a href="#about" class="text-secondary hover:text-primary transition-colors">About</a>
-          <a href="#rooms" class="text-secondary hover:text-primary transition-colors">Hotels</a>
-         
-          <a href="#gallery" class="text-secondary hover:text-primary transition-colors">Gallery</a>
-        
-          <a href="#contact" class="text-secondary hover:text-primary transition-colors">Contact</a>
-         <a href="#booking"> <button class="bg-primary text-white px-6 py-2 rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap cta-button">
-            Book Now
-          </button></a>
+          <a href="#home" class="text-secondary hover:text-primary transition-colors relative group">
+            <span>Home</span>
+            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+          </a>
+          <a href="#about" class="text-secondary hover:text-primary transition-colors relative group">
+            <span>About</span>
+            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+          </a>
+          <a href="#rooms" class="text-secondary hover:text-primary transition-colors relative group">
+            <span>Hotels</span>
+            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+          </a>
+          <a href="#gallery" class="text-secondary hover:text-primary transition-colors relative group">
+            <span>Gallery</span>
+            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+          </a>
+          <a href="#contact" class="text-secondary hover:text-primary transition-colors relative group">
+            <span>Contact</span>
+            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+          </a>
+          <a href="#booking" class="ml-4"> 
+            <button class="bg-primary text-white px-6 py-2 rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap cta-button pulse-gold">
+              Book Now
+            </button>
+          </a>
         </div>
 
         <!-- Mobile Menu Toggle -->
@@ -345,7 +442,7 @@
         <a href="#gallery" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Gallery</a>
         <a href="#testimonials" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Testimonials</a>
         <a href="#contact" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Contact</a>
-        <button class="bg-primary text-white px-8 py-3 rounded-button mt-6 whitespace-nowrap w-full max-w-xs">
+        <button class="bg-primary text-white px-8 py-3 rounded-button mt-6 whitespace-nowrap w-full max-w-xs pulse-gold">
           Book Now
         </button>
       </div>
@@ -357,20 +454,24 @@
       <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-black/10"></div>
 
       <div class="container mx-auto h-full flex items-center">
-        <div class="relative z-10 max-w-2xl px-6 md:px-0 text-white fade-in">
+        <div class="relative z-10 max-w-2xl px-6 md:px-0 text-white" data-aos="fade-up" data-aos-delay="300">
           <h1 class="text-4xl md:text-6xl font-semibold leading-tight mb-6">
-            Discover <span class="gold-accent">Kolappuram</span><br> Where Tradition Meets Luxury
+            Discover <span class="text-gradient">Kolappuram</span><br> Where Tradition Meets Luxury
           </h1>
           <p class="text-lg md:text-xl mb-8 text-gray-200">
             Experience the serene beauty of Kerala's hidden gem with unparalleled comfort and sophistication.
           </p>
           <div class="flex flex-wrap gap-4">
-          <a href="#about">  <button class="cta-button px-8 py-3 rounded-button">
-              Explore Kolappuram
-            </button></a>
-          <a href="#gallery">  <button class="btn-outline-gold px-8 py-3 rounded-button">
-              View Gallery
-            </button></a>
+            <a href="#about">  
+              <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg transition-all">
+                Explore Kolappuram
+              </button>
+            </a>
+            <a href="#gallery">  
+              <button class="btn-outline-gold px-8 py-3 rounded-button hover:shadow-lg transition-all">
+                View Gallery
+              </button>
+            </a>
           </div>
         </div>
       </div>
@@ -384,9 +485,9 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 section-light" style="background-color: #ffdd6c63;">
+    <section id="about" class="py-20 section-light gold-texture" style="background-color: rgba(255, 221, 108, 0.2);">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Welcome to Kolappuram</h2>
           <p class="text-gray-600 max-w-3xl mx-auto mt-8">
             Nestled in the heart of Kerala's Malappuram district, Kolappuram offers a unique blend of traditional charm and modern luxury. Our carefully curated experiences bring you the best of this serene village.
@@ -394,17 +495,17 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div class="slide-up">
-            <div class="relative overflow-hidden rounded-lg shadow-xl">
+          <div class="slide-up" data-aos="fade-right">
+            <div class="relative overflow-hidden rounded-xl shadow-xl">
               <img
                 src="./ChatGPT Image May 15, 2025, 12_20_01 PM.png"
-                class="w-full h-auto object-cover rounded-lg"
+                class="w-full h-auto object-cover rounded-xl hover:scale-105 transition-transform duration-500"
               />
               <div class="absolute inset-0 border-8 border-white opacity-20 pointer-events-none"></div>
             </div>
           </div>
 
-          <div class="slide-up">
+          <div class="slide-up" data-aos="fade-left" data-aos-delay="200">
             <h3 class="text-3xl font-semibold mb-6">Our Story</h3>
             <p class="text-gray-700 mb-6">
               Kolappuram is a peaceful village in Malappuram district, Kerala, known for its lush landscapes and rich cultural heritage. While little is documented about its specific history, it shares in Kerala's storied past and the legacy of the Malabar region.
@@ -414,9 +515,9 @@
             </p>
 
             <div class="grid grid-cols-2 gap-6">
-              <div class="flex items-center">
-                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                  <i class="ri-user-3-line text-primary text-xl"></i>
+              <div class="flex items-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white">
+                  <i class="ri-user-3-line text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold">Population</h4>
@@ -424,9 +525,9 @@
                 </div>
               </div>
 
-              <div class="flex items-center">
-                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                  <i class="ri-community-line text-primary text-xl"></i>
+              <div class="flex items-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white">
+                  <i class="ri-community-line text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold">Community</h4>
@@ -434,9 +535,9 @@
                 </div>
               </div>
 
-              <div class="flex items-center">
-                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                  <i class="ri-restaurant-line text-primary text-xl"></i>
+              <div class="flex items-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white">
+                  <i class="ri-restaurant-line text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold">Cuisine</h4>
@@ -444,9 +545,9 @@
                 </div>
               </div>
 
-              <div class="flex items-center">
-                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                  <i class="ri-leaf-line text-primary text-xl"></i>
+              <div class="flex items-center" data-aos="fade-up" data-aos-delay="400">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white">
+                  <i class="ri-leaf-line text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold">Nature</h4>
@@ -460,9 +561,9 @@
     </section>
 
     <!-- Services Section -->
-    <section class="py-20 bg-white" style="background-color: #ffdd6c63;">
+    <section class="py-20 bg-white gold-texture" style="background-color: rgba(255, 221, 108, 0.2);">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Kolappuram Highlights</h2>
           <p class="text-gray-600 max-w-3xl mx-auto mt-8">
             Discover the finest experiences Kolappuram has to offer, carefully selected for the discerning traveler.
@@ -470,12 +571,12 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div class="service-card luxury-card rounded-lg overflow-hidden">
+          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
             <div class="h-64 overflow-hidden">
               <img
                 src="./WhatsApp Image 2025-05-15 at 1.34.46 PM.jpeg"
                 alt="Dosthana Club"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
             </div>
             <div class="p-6">
@@ -483,18 +584,18 @@
               <p class="text-gray-600 mb-4">
                 Founded in 1972, this community hub promotes sports and culture, celebrating 50 years with vibrant events.
               </p>
-              <a href="#" class="text-primary flex items-center font-medium hover:underline">
-                Explore <i class="ri-arrow-right-line ml-2"></i>
+              <a href="#" class="text-primary flex items-center font-medium hover:underline group">
+                Explore <i class="ri-arrow-right-line ml-2 transition-transform group-hover:translate-x-1"></i>
               </a>
             </div>
           </div>
 
-          <div class="service-card luxury-card rounded-lg overflow-hidden">
+          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
             <div class="h-64 overflow-hidden">
               <img
                 src="./WhatsApp Image 2025-05-16 at 13.28.38_1564239d.jpg"
                 alt="Nava Kerala Samskarika Vedi"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
             </div>
             <div class="p-6">
@@ -502,18 +603,18 @@
               <p class="text-gray-600 mb-4">
                 Renowned for its tandoori specialties and biryanis, offering dine-in and delivery with excellent reviews.
               </p>
-              <a href="#" class="text-primary flex items-center font-medium hover:underline">
-                View Menu <i class="ri-arrow-right-line ml-2"></i>
+              <a href="#" class="text-primary flex items-center font-medium hover:underline group">
+                View Menu <i class="ri-arrow-right-line ml-2 transition-transform group-hover:translate-x-1"></i>
               </a>
             </div>
           </div>
 
-            <div class="service-card luxury-card rounded-lg overflow-hidden">
+          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
             <div class="h-64 overflow-hidden">
               <img
                 src="./WhatsApp Image 2025-05-15 at 14.00.20_3fd2a1d0.jpg"
                 alt="Madrasa"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
             </div>
             <div class="p-6">
@@ -521,18 +622,18 @@
               <p class="text-gray-600 mb-4">
                 A center for Arabic and Islamic studies that actively supports community religious events.
               </p>
-              <a href="#" class="text-primary flex items-center font-medium hover:underline">
-                Learn More <i class="ri-arrow-right-line ml-2"></i>
+              <a href="#" class="text-primary flex items-center font-medium hover:underline group">
+                Learn More <i class="ri-arrow-right-line ml-2 transition-transform group-hover:translate-x-1"></i>
               </a>
             </div>
           </div>
 
-          <div class="service-card luxury-card rounded-lg overflow-hidden">
+          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
             <div class="h-64 overflow-hidden">
               <img
                 src="./ChatGPT Image May 16, 2025, 10_54_53 AM.png"
                 alt="School"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
             </div>
             <div class="p-6">
@@ -540,8 +641,8 @@
               <p class="text-gray-600 mb-4">
                 Established in 1924, this government school serves 900 students with strong academics and cultural programs.
               </p>
-              <a href="#" class="text-primary flex items-center font-medium hover:underline">
-                Discover <i class="ri-arrow-right-line ml-2"></i>
+              <a href="#" class="text-primary flex items-center font-medium hover:underline group">
+                Discover <i class="ri-arrow-right-line ml-2 transition-transform group-hover:translate-x-1"></i>
               </a>
             </div>
           </div>
@@ -550,9 +651,9 @@
     </section>
 
     <!-- Rooms Section -->
-    <section id="rooms" class="py-20 section-light" style="background-color: #ffdd6c63;">
+    <section id="rooms" class="py-20 section-light gold-texture" style="background-color: rgba(255, 221, 108, 0.2);">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Premium Accommodations</h2>
           <p class="text-gray-600 max-w-3xl mx-auto mt-8">
             Experience Kolappuram in comfort and style at our carefully selected premium hotels.
@@ -560,15 +661,15 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div class="room-card luxury-card rounded-lg overflow-hidden">
+          <div class="room-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
             <div class="relative h-80">
               <img
                 src="./WhatsApp Image 2025-05-15 at 1.44.44 PM.jpeg"
                 alt="Nava Kerala Samskarika Vedi"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
               <div class="room-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
-                <button class="btn-outline-gold px-6 py-2 rounded-button">
+                <button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
                   View Details
                 </button>
               </div>
@@ -576,7 +677,13 @@
             <div class="p-6">
               <div class="flex justify-between items-center mb-3">
                 <h3 class="text-xl font-semibold">Thandoor Hut</h3>
-            
+                <div class="flex items-center text-sm text-gold">
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-half-fill"></i>
+                </div>
               </div>
               <p class="text-gray-600 mb-4">
                 A popular local eatery known for its delicious grilled and tandoori dishes, offering authentic flavors in a cozy atmosphere.
@@ -589,15 +696,15 @@
             </div>
           </div>
 
-          <div class="room-card luxury-card rounded-lg overflow-hidden">
+          <div class="room-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
             <div class="relative h-80">
               <img
                 src="./WhatsApp Image 2025-05-16 at 10.11.12_db344e04.jpg"
                 alt="Hilux Hotel"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
               <div class="room-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
-                <button class="btn-outline-gold px-6 py-2 rounded-button">
+                <button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
                   View Details
                 </button>
               </div>
@@ -605,7 +712,13 @@
             <div class="p-6">
               <div class="flex justify-between items-center mb-3">
                 <h3 class="text-xl font-semibold">Hilux Hotel</h3>
-            
+                <div class="flex items-center text-sm text-gold">
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-line"></i>
+                </div>
               </div>
               <p class="text-gray-600 mb-4">
                 A well-established hotel providing comfortable accommodation and friendly service, favored for its clean rooms and good hospitality.
@@ -618,15 +731,15 @@
             </div>
           </div>
 
-          <div class="room-card luxury-card rounded-lg overflow-hidden">
+          <div class="room-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
             <div class="relative h-80">
               <img
                 src="./WhatsApp Image 2025-05-16 at 10.11.11_5a6a527b.jpg"
                 alt="AL-Farooj"
-                class="w-full h-full object-cover"
+                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
               <div class="room-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
-                <button class="btn-outline-gold px-6 py-2 rounded-button">
+                <button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
                   View Details
                 </button>
               </div>
@@ -634,7 +747,13 @@
             <div class="p-6">
               <div class="flex justify-between items-center mb-3">
                 <h3 class="text-xl font-semibold">AL-Farooj</h3>
-     
+                <div class="flex items-center text-sm text-gold">
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                </div>
               </div>
               <p class="text-gray-600 mb-4">
                 Famous for Middle Eastern and Indian fast food, especially shawarmas and grilled dishes, with a vibrant ambiance.
@@ -648,18 +767,18 @@
           </div>
         </div>
 
-        <div class="text-center mt-12">
-          <button class="cta-button px-8 py-3 rounded-button">
+        <div class="text-center mt-12" data-aos="fade-up">
+          <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg">
             View All Accommodations
-          </button>
+                   </button>
         </div>
       </div>
     </section>
 
     <!-- Kolappuram Place Info Section -->
-    <section id="kolappuram-info" class="py-20 section-dark" >
+    <section id="kolappuram-info" class="py-20 section-dark gold-texture">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Discover Kolappuram</h2>
           <p class="text-gray-300 max-w-3xl mx-auto mt-8">
             Experience the vibrant culture, natural beauty, and warm community spirit of this Kerala gem.
@@ -668,12 +787,12 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <!-- Nature & Landscape -->
-          <div class="bg-secondary/50 p-8 rounded-lg">
+          <div class="bg-secondary/50 p-8 rounded-lg backdrop-blur-sm" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-2xl font-semibold mb-6 text-center gold-accent">Nature & Landscape</h3>
             <div class="space-y-5">
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-leaf-line gold-accent"></i>
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-leaf-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1 text-white">Lush Greenery</h4>
@@ -683,8 +802,8 @@
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-water-line gold-accent"></i>
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-water-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1 text-white">Waterways</h4>
@@ -694,8 +813,8 @@
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-landscape-line gold-accent"></i>
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-landscape-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1 text-white">Scenic Views</h4>
@@ -708,12 +827,12 @@
           </div>
 
           <!-- Culture & Community -->
-          <div class="bg-secondary/50 p-8 rounded-lg">
+          <div class="bg-secondary/50 p-8 rounded-lg backdrop-blur-sm" data-aos="fade-up" data-aos-delay="200">
             <h3 class="text-2xl font-semibold mb-6 text-center gold-accent">Culture & Community</h3>
             <div class="space-y-5">
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-group-line gold-accent"></i>
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-group-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1 text-white">Warm Hospitality</h4>
@@ -723,8 +842,8 @@
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-calendar-event-line gold-accent"></i>
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-calendar-event-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1 text-white">Festivals</h4>
@@ -734,8 +853,8 @@
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-restaurant-2-line gold-accent"></i>
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-restaurant-2-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1 text-white">Culinary Traditions</h4>
@@ -748,12 +867,12 @@
           </div>
 
           <!-- Recreation & Activities -->
-          <div class="bg-secondary/50 p-8 rounded-lg">
+          <div class="bg-secondary/50 p-8 rounded-lg backdrop-blur-sm" data-aos="fade-up" data-aos-delay="300">
             <h3 class="text-2xl font-semibold mb-6 text-center gold-accent">Experiences</h3>
             <div class="space-y-5">
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-walk-line gold-accent"></i>
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-walk-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1 text-white">Village Walks</h4>
@@ -763,8 +882,8 @@
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-cup-line gold-accent"></i>
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-cup-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1 text-white">Tea Stalls</h4>
@@ -774,8 +893,8 @@
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-artboard-2-line gold-accent"></i>
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-artboard-2-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1 text-white">Handicrafts</h4>
@@ -791,44 +910,47 @@
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="py-20 section-light" style="background-color: #ffdd6c63;">
+    <section id="gallery" class="py-20 section-light gold-texture" style="background-color: rgba(255, 221, 108, 0.2);">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Kolappuram Gallery</h2>
           <p class="text-gray-600 max-w-3xl mx-auto mt-8">
             Explore the beauty and elegance of Kolappuram through our curated collection of images.
           </p>
         </div>
 
-        <div class="flex justify-center mb-10">
+        <div class="flex justify-center mb-10" data-aos="fade-up">
           <div class="inline-flex bg-gray-100 p-1 rounded-full">
             <button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap">
               Places to Visit
             </button>
             <button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap">
-         Play With Nature
+              Play With Nature
             </button>
-   
+            <button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap">
+              Cultural Events
+            </button>
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="100">
             <div class="relative">
               <img
                 src="./WhatsApp Image 2025-05-16 at 11.03.31_ce716a60.jpg"
-                               alt="Village Scene"
+                alt="Village Scene"
                 class="w-full h-72 object-cover"
               />
               <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
-                <div class="text-white text-center">
-                  
+                <div class="text-white text-center p-4">
+                  <h4 class="text-xl font-semibold mb-2">Village Life</h4>
+                  <p class="text-sm">Traditional homes in peaceful settings</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="150">
             <div class="relative">
               <img
                 src="./WhatsApp Image 2025-05-16 at 11.34.42_2e6a5536.jpg"
@@ -836,14 +958,15 @@
                 class="w-full h-72 object-cover"
               />
               <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
-                <div class="text-white text-center">
-   
+                <div class="text-white text-center p-4">
+                  <h4 class="text-xl font-semibold mb-2">Local Cuisine</h4>
+                  <p class="text-sm">Authentic Kerala flavors</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="200">
             <div class="relative">
               <img
                 src="./WhatsApp Image 2025-05-16 at 11.03.31_53f29576.jpg"
@@ -851,14 +974,15 @@
                 class="w-full h-72 object-cover"
               />
               <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
-                <div class="text-white text-center">
-               
+                <div class="text-white text-center p-4">
+                  <h4 class="text-xl font-semibold mb-2">Heritage</h4>
+                  <p class="text-sm">Timeless architectural beauty</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="250">
             <div class="relative">
               <img
                 src="./WhatsApp Image 2025-05-16 at 11.03.30_1db69e65.jpg"
@@ -866,14 +990,15 @@
                 class="w-full h-72 object-cover"
               />
               <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
-                <div class="text-white text-center">
-         
+                <div class="text-white text-center p-4">
+                  <h4 class="text-xl font-semibold mb-2">Agriculture</h4>
+                  <p class="text-sm">Lush paddy fields</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer" >
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="300">
             <div class="relative">
               <img
                 src="./WhatsApp Image 2025-05-16 at 11.03.29_c8b8454b.jpg"
@@ -881,48 +1006,49 @@
                 class="w-full h-72 object-cover"
               />
               <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
-                <div class="text-white text-center">
-               
+                <div class="text-white text-center p-4">
+                  <h4 class="text-xl font-semibold mb-2">Spirituality</h4>
+                  <p class="text-sm">Sacred places of worship</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="350">
             <div class="relative">
               <img
                 src="./WhatsApp Image 2025-05-16 at 11.03.29_2ead620b.jpg"
                 alt="Sunset"
                 class="w-full h-72 object-cover"
               />
-
-              
               <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
-                <div class="text-white text-center">
-               
+                <div class="text-white text-center p-4">
+                  <h4 class="text-xl font-semibold mb-2">Sunset Views</h4>
+                  <p class="text-sm">Breathtaking golden hours</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" style="margin-top: 20px;">
-          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="100">
             <div class="relative">
               <img
                 src="./WhatsApp Image 2025-05-16 at 13.28.38_1564239d.jpg"
-                               alt="Village Scene"
+                alt="Village Scene"
                 class="w-full h-72 object-cover"
               />
               <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
-                <div class="text-white text-center">
-               
+                <div class="text-white text-center p-4">
+                  <h4 class="text-xl font-semibold mb-2">Community</h4>
+                  <p class="text-sm">Vibrant local gatherings</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="150">
             <div class="relative">
               <img
                 src="./WhatsApp Image 2025-05-16 at 13.42.51_a35723a0.jpg"
@@ -930,14 +1056,15 @@
                 class="w-full h-72 object-cover"
               />
               <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
-                <div class="text-white text-center">
-                
+                <div class="text-white text-center p-4">
+                  <h4 class="text-xl font-semibold mb-2">Markets</h4>
+                  <p class="text-sm">Local produce and crafts</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer">
+          <div class="gallery-item rounded-lg overflow-hidden cursor-pointer" data-aos="fade-up" data-aos-delay="200">
             <div class="relative">
               <img
                 src="./WhatsApp Image 2025-05-16 at 13.42.51_e5bad0c2.jpg"
@@ -945,17 +1072,17 @@
                 class="w-full h-72 object-cover"
               />
               <div class="gallery-overlay absolute inset-0 flex items-center justify-center">
-                <div class="text-white text-center">
-     
+                <div class="text-white text-center p-4">
+                  <h4 class="text-xl font-semibold mb-2">Festivals</h4>
+                  <p class="text-sm">Colorful cultural celebrations</p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-
-
-        <div class="text-center mt-12">
-          <button class="cta-button px-8 py-3 rounded-button">
+        <div class="text-center mt-12" data-aos="fade-up">
+          <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg">
             View Full Gallery
           </button>
         </div>
@@ -963,28 +1090,28 @@
     </section>
 
     <!-- Kolappuram Highlights Section -->
-    <section id="kolappuram" class="py-20 section-dark">
+    <section id="kolappuram" class="py-20 section-dark gold-texture">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Traveler Experiences</h2>
           <p class="text-gray-300 max-w-3xl mx-auto mt-8">
             Hear what our visitors say about their time in Kolappuram
           </p>
         </div>
 
-        <div class="relative max-w-4xl mx-auto">
+        <div class="relative max-w-4xl mx-auto" data-aos="fade-up">
           <div class="kolappuram-slide active">
-            <div class="bg-secondary/50 p-8 md:p-12 rounded-lg">
+            <div class="bg-secondary/50 p-8 md:p-12 rounded-lg backdrop-blur-sm">
               <div class="flex flex-col md:flex-row items-center mb-6">
                 <div class="w-20 h-20 rounded-full overflow-hidden mb-4 md:mb-0 md:mr-6 border-2 border-primary">
                   <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQINVyZtwl6OTECc562qvJebhZHX-2QT2ouMg&s"
+                    src="https://randomuser.me/api/portraits/women/45.jpg"
                     alt="Sarah Johnson"
                     class="w-full h-full object-cover"
                   />
                 </div>
                 <div class="text-center md:text-left">
-                  <h4 class="text-xl font-semibold text-white">Riyas K </h4>
+                  <h4 class="text-xl font-semibold text-white">Riyas K</h4>
                   <p class="text-gray-400">Malappuram</p>
                   <div class="flex justify-center md:justify-start mt-2 text-gold">
                     <i class="ri-star-fill"></i>
@@ -1002,7 +1129,7 @@
           </div>
         </div>
 
-        <div class="flex justify-center mt-8">
+        <div class="flex justify-center mt-8" data-aos="fade-up">
           <div class="flex space-x-2">
             <button class="w-3 h-3 rounded-full bg-primary"></button>
             <button class="w-3 h-3 rounded-full bg-gray-600"></button>
@@ -1014,16 +1141,16 @@
     </section>
 
     <!-- Booking Section -->
-    <section id="booking" class="py-20 section-light" style="background-color: #ffdd6c63;">
+    <section id="booking" class="py-20 section-light gold-texture" style="background-color: rgba(255, 221, 108, 0.2);">
       <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
+          <div data-aos="fade-right">
             <h2 class="text-4xl font-semibold mb-6 luxury-border inline-block pb-2">Plan Your Visit</h2>
             <p class="text-gray-600 mb-8">
               Reserve your stay in Kolappuram and experience the perfect blend of Kerala tradition and modern comfort.
             </p>
 
-            <div class="bg-white p-8 rounded-lg shadow-md">
+            <div class="bg-white p-8 rounded-lg shadow-md" data-aos="zoom-in">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label class="block text-gray-700 mb-2">Check-in Date</label>
@@ -1107,17 +1234,17 @@
                 ></textarea>
               </div>
 
-              <button class="w-full cta-button py-3 rounded-button">
+              <button class="w-full cta-button py-3 rounded-button hover:shadow-lg">
                 Check Availability
               </button>
             </div>
           </div>
 
-          <div class="relative h-full min-h-[500px] rounded-lg overflow-hidden shadow-xl">
+          <div class="relative h-full min-h-[500px] rounded-lg overflow-hidden shadow-xl" data-aos="fade-left">
             <img
               src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
               alt="Kolappuram Landscape"
-              class="w-full h-full object-cover"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
             />
             <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-8">
               <div class="text-white">
@@ -1125,7 +1252,7 @@
                 <p class="mb-4 text-gray-200">
                   Book a 5-night stay and receive a complimentary traditional Kerala massage and sunset village walk.
                 </p>
-                <button class="btn-outline-gold px-6 py-2 rounded-button">
+                <button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
                   Learn More
                 </button>
               </div>
@@ -1136,9 +1263,9 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white" style="background-color: #ffdd6c63;">
+    <section id="contact" class="py-20 bg-white gold-texture" style="background-color: rgba(255, 221, 108, 0.2);">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Contact Us</h2>
           <p class="text-gray-600 max-w-3xl mx-auto mt-8">
             Have questions or need assistance? Our team is here to help you plan your perfect Kolappuram experience.
@@ -1146,13 +1273,13 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div class="luxury-card p-8 rounded-lg">
+          <div class="luxury-card p-8 rounded-lg" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-xl font-semibold mb-6">Kolappuram Information</h3>
 
             <div class="space-y-6">
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-map-pin-line text-primary"></i>
+                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-map-pin-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1">Location</h4>
@@ -1164,8 +1291,8 @@
               </div>
 
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-phone-line text-primary"></i>
+                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-phone-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1">Phone</h4>
@@ -1177,14 +1304,14 @@
               </div>
 
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1">
-                  <i class="ri-mail-line text-primary"></i>
+                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                  <i class="ri-mail-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1">Email</h4>
                   <p class="text-gray-600">
                     info@kolappuramelegance.com<br>
-                  
+                    reservations@kolappuramelegance.com
                   </p>
                 </div>
               </div>
@@ -1193,23 +1320,23 @@
             <div class="mt-8">
               <h4 class="font-semibold mb-4">Follow Our Journey</h4>
               <div class="flex space-x-4">
-                <a href="https://www.facebook.com/share/18rnEd5ikY/" class="social-icon">
+                <a href="https://www.facebook.com/share/18rnEd5ikY/" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
                   <i class="ri-facebook-fill"></i>
                 </a>
-                <a href="https://www.instagram.com/kolappuram_live?igsh=cWVkZ2NycGhwZ25t" class="social-icon">
+                <a href="https://www.instagram.com/kolappuram_live?igsh=cWVkZ2NycGhwZ25t" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
                   <i class="ri-instagram-line"></i>
                 </a>
-                <a href="#" class="social-icon">
+                <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
                   <i class="ri-twitter-x-line"></i>
                 </a>
-                <a href="#" class="social-icon">
+                <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
                   <i class="ri-youtube-line"></i>
                 </a>
               </div>
             </div>
           </div>
 
-          <div class="lg:col-span-2 luxury-card p-8 rounded-lg">
+          <div class="lg:col-span-2 luxury-card p-8 rounded-lg" data-aos="fade-up" data-aos-delay="200">
             <h3 class="text-xl font-semibold mb-6">Send Us a Message</h3>
 
             <form>
@@ -1282,7 +1409,7 @@
                 </label>
               </div>
 
-              <button class="cta-button px-8 py-3 rounded-button">
+              <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg">
                 Send Message
               </button>
             </form>
@@ -1292,7 +1419,7 @@
     </section>
 
     <!-- Map Section -->
-    <section class="h-96 relative">
+    <section class="h-96 relative" data-aos="fade-up">
       <iframe 
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3931.818990183358!2d75.9726840748449!3d11.027016854147692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba655ad14ddc067%3A0xd0b51b91d7c6b9f4!2sKolappuram%2C%20Kerala%20676305!5e0!3m2!1sen!2sin!4v1715866920202!5m2!1sen!2sin" 
         width="100%" 
@@ -1306,7 +1433,7 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section class="py-16 section-dark">
+    <section class="py-16 section-dark gold-texture" data-aos="fade-up">
       <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto text-center">
           <h2 class="text-3xl font-semibold mb-4 gold-accent">
@@ -1323,7 +1450,7 @@
               class="flex-grow p-3 rounded-lg border-none focus:outline-none text-gray-800"
             />
             <button
-              class="bg-primary text-white px-6 py-3 rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap"
+              class="bg-primary text-white px-6 py-3 rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap hover:shadow-lg"
             >
               Subscribe
             </button>
@@ -1333,43 +1460,45 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-secondary text-white pt-16 pb-8">
+    <footer class="bg-secondary text-white pt-16 pb-8 gold-texture">
       <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <div>
+          <div data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-2xl font-bold text-white mb-6">KOLAPPURAM</h3>
             <p class="text-gray-400 mb-6">
               Curating exceptional experiences in Kerala's hidden gem, blending tradition with luxury.
             </p>
             <div class="flex space-x-4">
-              <a href="https://www.facebook.com/share/18rnEd5ikY/" class="social-icon">
+              <a href="https://www.facebook.com/share/18rnEd5ikY/" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
                 <i class="ri-facebook-fill"></i>
               </a>
-              <a href="https://www.instagram.com/kolappuram_live?igsh=cWVkZ2NycGhwZ25t" class="social-icon">
+              <a href="https://www.instagram.com/kolappuram_live?igsh=cWVkZ2NycGhwZ25t" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
                 <i class="ri-instagram-line"></i>
               </a>
-              <a href="#" class="social-icon">
+              <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
                 <i class="ri-twitter-x-line"></i>
               </a>
-              <a href="#" class="social-icon">
+              <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
                 <i class="ri-youtube-line"></i>
               </a>
             </div>
           </div>
 
-          <div>
+          <div data-aos="fade-up" data-aos-delay="200">
             <h4 class="text-lg font-semibold mb-6 gold-accent">Quick Links</h4>
             <ul class="space-y-3">
               <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Kolappuram</a></li>
               <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Accommodations</a></li>
               <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Dining Experiences</a></li>
               <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cultural Activities</a></li>
+             
+
               <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Gallery</a></li>
               <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
             </ul>
           </div>
 
-          <div>
+          <div data-aos="fade-up" data-aos-delay="300">
             <h4 class="text-lg font-semibold mb-6 gold-accent">Contact</h4>
             <ul class="space-y-3">
               <li class="flex items-start">
@@ -1389,7 +1518,7 @@
             </ul>
           </div>
 
-          <div>
+          <div data-aos="fade-up" data-aos-delay="400">
             <h4 class="text-lg font-semibold mb-6 gold-accent">Explore Kerala</h4>
             <ul class="space-y-3">
               <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Malappuram District</a></li>
@@ -1419,15 +1548,23 @@
 
     <!-- Back to Top Button -->
     <button
-      class="fixed bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300"
+      class="fixed bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:scale-110"
       id="backToTop"
     >
       <i class="ri-arrow-up-line text-xl"></i>
     </button>
 
-
-
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
+      // Initialize AOS animation library
+      AOS.init({
+        duration: 600,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+      });
+
       document.addEventListener("DOMContentLoaded", function () {
         // Mobile Menu Toggle
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
@@ -1549,3 +1686,4 @@
     </script>
   </body>
 </html>
+
