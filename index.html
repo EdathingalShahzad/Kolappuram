@@ -192,75 +192,178 @@
           color: white;
           border-color: #B38B59;
       }
+.card {
+  overflow: visible;
+  width: 190px;
+  height: 254px;
+}
 
-      /* Luxury border accents */
-      .luxury-border {
-          position: relative;
-      }
+.content {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1500ms; /* Changed from 300ms to 1000ms (1 second) */
+  box-shadow: 0px 0px 10px 1px #000000ee;
+  border-radius: 5px;
+}
 
-      .luxury-border:after {
-          content: '';
-          position: absolute;
-          bottom: -10px;
-          left: 0;
-          width: 60px;
-          height: 3px;
-          background: var(--gold-gradient);
-      }
-  .luxury-card {
-    position: relative;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(179, 139, 89, 0.2);
-    box-shadow: 0 5px 30px rgba(30, 26, 22, 0.05);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    border-radius: 15px;
-    cursor: pointer;
+.front, .back {
+  background-color: #151515;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.back {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.back::before {
+  position: absolute;
+  content: ' ';
+  display: block;
+  width: 160px;
+  height: 160%;
+  background: linear-gradient(90deg, transparent, #ff9966, #ff9966, #ff9966, #ff9966, transparent);
+  animation: rotation_481 5000ms infinite linear;
+}
+
+.back-content {
+  position: absolute;
+  width: 99%;
+  height: 99%;
+  background-color: #151515;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.card:hover .content {
+  transform: rotateY(180deg);
+}
+
+@keyframes rotation_481 {
+  0% {
+    transform: rotateZ(0deg);
   }
 
-  .luxury-card::before,
-  .luxury-card::after {
-    position: absolute;
-    content: "";
-    width: 20%;
-    height: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
-    font-weight: bold;
-    background-color: rgba(179, 139, 89, 0.2);
-    transition: all 0.5s;
-    z-index: 1;
+  0% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.front {
+  transform: rotateY(180deg);
+  color: white;
+}
+
+.front .front-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.front-content .badge {
+  background-color: #00000055;
+  padding: 2px 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(2px);
+  width: fit-content;
+}
+
+.description {
+  box-shadow: 0px 0px 10px 5px #00000088;
+  width: 100%;
+  padding: 10px;
+  background-color: #00000099;
+  backdrop-filter: blur(5px);
+  border-radius: 5px;
+}
+
+.title {
+  font-size: 11px;
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title p {
+  width: 50%;
+}
+
+.card-footer {
+  color: #ffffff88;
+  margin-top: 5px;
+  font-size: 8px;
+}
+
+.front .img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #ffbb66;
+  position: relative;
+  filter: blur(15px);
+  animation: floating 2600ms infinite linear;
+}
+
+#bottom {
+  background-color: #ff8866;
+  left: 50px;
+  top: 0px;
+  width: 150px;
+  height: 150px;
+  animation-delay: -800ms;
+}
+
+#right {
+  background-color: #ff2233;
+  left: 160px;
+  top: -80px;
+  width: 30px;
+  height: 30px;
+  animation-delay: -1800ms;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
   }
 
-  .luxury-card::before {
-    top: 0;
-    right: 0;
-    border-radius: 0 15px 0 100%;
+  50% {
+    transform: translateY(10px);
   }
 
-  .luxury-card::after {
-    bottom: 0;
-    left: 0;
-    border-radius: 0 100% 0 15px;
+  100% {
+    transform: translateY(0px);
   }
-
-  .luxury-card:hover::before,
-  .luxury-card:hover::after {
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
-    transition: all 0.5s;
-  }
-
-  .luxury-card:hover {
-    box-shadow: 0 15px 40px rgba(30, 26, 22, 0.1);
-    transform: translateY(-5px);
-  }
-
+}
+     
       /* Gold accent text */
       .gold-accent {
           color: #D4AF37;
@@ -652,84 +755,189 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
-            <div class="h-64 overflow-hidden">
-              <img
-                src="./WhatsApp Image 2025-05-15 at 1.34.46 PM.jpeg"
-                alt="Dosthana Club"
-                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-              />
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-semibold mb-2">Dosthana Club</h3>
-              <p class="text-gray-600 mb-4">
-                Founded in 1972, this community hub promotes sports and culture, celebrating 50 years with vibrant events.
-              </p>
-              <a href="#" class="text-primary flex items-center font-medium hover:underline group">
-                Explore <i class="ri-arrow-right-line ml-2 transition-transform group-hover:translate-x-1"></i>
-              </a>
-            </div>
-          </div>
 
-          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
-            <div class="h-64 overflow-hidden">
-              <img
-                src="./WhatsApp Image 2025-05-16 at 13.28.38_1564239d.jpg"
-                alt="Nava Kerala Samskarika Vedi"
-                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-              />
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-semibold mb-2">Nava Kerala Samskarika Vedi</h3>
-              <p class="text-gray-600 mb-4">
-                Renowned for its tandoori specialties and biryanis, offering dine-in and delivery with excellent reviews.
-              </p>
-              <a href="#" class="text-primary flex items-center font-medium hover:underline group">
-                View Menu <i class="ri-arrow-right-line ml-2 transition-transform group-hover:translate-x-1"></i>
-              </a>
-            </div>
-          </div>
+        <div class="main-card" style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
 
-          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
-            <div class="h-64 overflow-hidden">
-              <img
-                src="./WhatsApp Image 2025-05-15 at 14.00.20_3fd2a1d0.jpg"
-                alt="Madrasa"
-                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-              />
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-semibold mb-2">Nibrasul Islam Madrasa</h3>
-              <p class="text-gray-600 mb-4">
-                A center for Arabic and Islamic studies that actively supports community religious events.
-              </p>
-              <a href="#" class="text-primary flex items-center font-medium hover:underline group">
-                Learn More <i class="ri-arrow-right-line ml-2 transition-transform group-hover:translate-x-1"></i>
-              </a>
-            </div>
-          </div>
 
-          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
-            <div class="h-64 overflow-hidden">
-              <img
-                src="./ChatGPT Image May 16, 2025, 10_54_53 AM.png"
-                alt="School"
-                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-              />
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-semibold mb-2">GHS Kolappuram</h3>
-              <p class="text-gray-600 mb-4">
-                Established in 1924, this government school serves 900 students with strong academics and cultural programs.
-              </p>
-              <a href="#" class="text-primary flex items-center font-medium hover:underline group">
-                Discover <i class="ri-arrow-right-line ml-2 transition-transform group-hover:translate-x-1"></i>
-              </a>
-            </div>
-          </div>
+              <div class="card">
+  <div class="content">
+    <div class="back">
+      <div class="back-content">
+        <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff">
+
+        <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+
+        <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+
+ <img src="./WhatsApp Image 2025-05-15 at 1.34.46 PM.jpeg" alt="shahzad">
+        </svg>
+
+      </div>
+    </div>
+    <div class="front">
+      
+      <div class="img">
+        <div class="circle">
+        </div>
+        <div class="circle" id="right">
+        </div>
+        <div class="circle" id="bottom">
         </div>
       </div>
+
+      <div class="front-content">
+        <small class="badge">Thandoor Hut</small>
+        <div class="description">
+          <div class="title">
+            <p class="title">
+              <strong>Spaguetti Bolognese</strong>
+            </p>
+            <svg fill-rule="nonzero" height="15px" width="15px" viewBox="0,0,256,256" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g style="mix-blend-mode: normal" text-anchor="none" font-size="none" font-weight="none" font-family="none" stroke-dashoffset="0" stroke-dasharray="" stroke-miterlimit="10" stroke-linejoin="miter" stroke-linecap="butt" stroke-width="1" stroke="none" fill-rule="nonzero" fill="#20c997"><g transform="scale(8,8)"><path d="M25,27l-9,-6.75l-9,6.75v-23h18z"></path></g></g></svg>
+          </div>
+          <p class="card-footer">
+            30 Mins &nbsp; | &nbsp; 1 Serving
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="card">
+  <div class="content">
+    <div class="back">
+      <div class="back-content">
+        <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff">
+
+        <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+
+        <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+
+ <img src="./WhatsApp Image 2025-05-15 at 1.34.46 PM.jpeg" alt="shahzad">
+        </svg>
+
+      </div>
+    </div>
+    <div class="front">
+      
+      <div class="img">
+        <div class="circle">
+        </div>
+        <div class="circle" id="right">
+        </div>
+        <div class="circle" id="bottom">
+        </div>
+      </div>
+
+      <div class="front-content">
+        <small class="badge">Thandoor Hut</small>
+        <div class="description">
+          <div class="title">
+            <p class="title">
+              <strong>Spaguetti Bolognese</strong>
+            </p>
+            <svg fill-rule="nonzero" height="15px" width="15px" viewBox="0,0,256,256" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g style="mix-blend-mode: normal" text-anchor="none" font-size="none" font-weight="none" font-family="none" stroke-dashoffset="0" stroke-dasharray="" stroke-miterlimit="10" stroke-linejoin="miter" stroke-linecap="butt" stroke-width="1" stroke="none" fill-rule="nonzero" fill="#20c997"><g transform="scale(8,8)"><path d="M25,27l-9,-6.75l-9,6.75v-23h18z"></path></g></g></svg>
+          </div>
+          <p class="card-footer">
+            30 Mins &nbsp; | &nbsp; 1 Serving
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="card">
+  <div class="content">
+    <div class="back">
+      <div class="back-content">
+        <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff">
+
+        <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+
+        <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+
+ <img src="./WhatsApp Image 2025-05-15 at 1.34.46 PM.jpeg" alt="shahzad">
+        </svg>
+
+      </div>
+    </div>
+    <div class="front">
+      
+      <div class="img">
+        <div class="circle">
+        </div>
+        <div class="circle" id="right">
+        </div>
+        <div class="circle" id="bottom">
+        </div>
+      </div>
+
+      <div class="front-content">
+        <small class="badge">Thandoor Hut</small>
+        <div class="description">
+          <div class="title">
+            <p class="title">
+              <strong>Spaguetti Bolognese</strong>
+            </p>
+            <svg fill-rule="nonzero" height="15px" width="15px" viewBox="0,0,256,256" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g style="mix-blend-mode: normal" text-anchor="none" font-size="none" font-weight="none" font-family="none" stroke-dashoffset="0" stroke-dasharray="" stroke-miterlimit="10" stroke-linejoin="miter" stroke-linecap="butt" stroke-width="1" stroke="none" fill-rule="nonzero" fill="#20c997"><g transform="scale(8,8)"><path d="M25,27l-9,-6.75l-9,6.75v-23h18z"></path></g></g></svg>
+          </div>
+          <p class="card-footer">
+            30 Mins &nbsp; | &nbsp; 1 Serving
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="card">
+  <div class="content">
+    <div class="back">
+      <div class="back-content">
+        <svg stroke="#ffffff" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" height="50px" width="50px" fill="#ffffff">
+
+        <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+
+        <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+
+ <img src="./WhatsApp Image 2025-05-15 at 1.34.46 PM.jpeg" alt="shahzad">
+        </svg>
+
+      </div>
+    </div>
+    <div class="front">
+      
+      <div class="img">
+        <div class="circle">
+        </div>
+        <div class="circle" id="right">
+        </div>
+        <div class="circle" id="bottom">
+        </div>
+      </div>
+
+      <div class="front-content">
+        <small class="badge">Thandoor Hut</small>
+        <div class="description">
+          <div class="title">
+            <p class="title">
+              <strong>Spaguetti Bolognese</strong>
+            </p>
+            <svg fill-rule="nonzero" height="15px" width="15px" viewBox="0,0,256,256" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g style="mix-blend-mode: normal" text-anchor="none" font-size="none" font-weight="none" font-family="none" stroke-dashoffset="0" stroke-dasharray="" stroke-miterlimit="10" stroke-linejoin="miter" stroke-linecap="butt" stroke-width="1" stroke="none" fill-rule="nonzero" fill="#20c997"><g transform="scale(8,8)"><path d="M25,27l-9,-6.75l-9,6.75v-23h18z"></path></g></g></svg>
+          </div>
+          <p class="card-footer">
+            30 Mins &nbsp; | &nbsp; 1 Serving
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
     </section>
 
     <!-- Rooms Section -->
