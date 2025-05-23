@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -206,6 +207,59 @@
           height: 3px;
           background: var(--gold-gradient);
       }
+  .luxury-card {
+    position: relative;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(179, 139, 89, 0.2);
+    box-shadow: 0 5px 30px rgba(30, 26, 22, 0.05);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  .luxury-card::before,
+  .luxury-card::after {
+    position: absolute;
+    content: "";
+    width: 20%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    background-color: rgba(179, 139, 89, 0.2);
+    transition: all 0.5s;
+    z-index: 1;
+  }
+
+  .luxury-card::before {
+    top: 0;
+    right: 0;
+    border-radius: 0 15px 0 100%;
+  }
+
+  .luxury-card::after {
+    bottom: 0;
+    left: 0;
+    border-radius: 0 100% 0 15px;
+  }
+
+  .luxury-card:hover::before,
+  .luxury-card:hover::after {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    transition: all 0.5s;
+  }
+
+  .luxury-card:hover {
+    box-shadow: 0 15px 40px rgba(30, 26, 22, 0.1);
+    transform: translateY(-5px);
+  }
 
       /* Gold accent text */
       .gold-accent {
@@ -227,6 +281,33 @@
           background-color: #3A2E26;
           color: white;
       }
+
+      .service-card, .room-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  /* Adjust the overlay styles to work with the new effect */
+  .room-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: rgba(30, 26, 22, 0.6);
+    z-index: 2; /* Make sure overlay appears above the card effect */
+  }
+
+  .room-card:hover .room-overlay {
+    opacity: 1;
+  }
+
+  .gallery-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: linear-gradient(to top, rgba(30, 26, 22, 0.8), transparent);
+    z-index: 2; /* Make sure overlay appears above the card effect */
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
 
       .section-dark h2, 
       .section-dark h3,
