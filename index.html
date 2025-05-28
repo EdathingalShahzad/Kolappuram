@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+    <script defer src="https://unpkg.com/face-api.js"></script>
+
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -2572,6 +2574,10 @@
 </section>
 
 
+
+<video id="video" width="720" height="560" autoplay muted></video>
+
+
 <!-- Footer -->
 <footer class="bg-secondary text-white pt-16 pb-8 gold-texture">
   <div class="container mx-auto px-6">
@@ -3065,7 +3071,74 @@
   "clientId": "e9e101b1-192d-4af5-a597-36b9893d1244",
   "selector": "#webchat"
 });
-  
+
+// Voice command recognition
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.lang = 'en-US';
+
+document.getElementById('voice-btn').addEventListener('click', () => {
+  recognition.start();
+  console.log("Listening...");
+});
+
+recognition.onresult = (event) => {
+  const command = event.results[0][0].transcript.toLowerCase();
+  if (command.includes("book hotel")) {
+    window.location.href = "#booking";
+  }
+};
+
+
+
+
+
+
+
+
+  const video = document.getElementById('video');
+
+  // മോഡൽകൾ ലോഡുചെയ്യുക
+  Promise.all([
+    faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+    faceapi.nets.faceExpressionNet.loadFromUri('/models')
+  ]).then(startVideo);
+
+  function startVideo() {
+    navigator.mediaDevices.getUserMedia({ video: {} })
+      .then((stream) => {
+        video.srcObject = stream;
+      })
+      .catch((err) => console.error('വെബ്‌ക്യാം ഉപയോഗിക്കാൻ കഴിയുന്നില്ല:', err));
+  }
+
+  video.addEventListener('play', () => {
+    const canvas = faceapi.createCanvasFromMedia(video);
+    document.body.append(canvas);
+    const displaySize = { width: video.width, height: video.height };
+    faceapi.matchDimensions(canvas, displaySize);
+
+    setInterval(async () => {
+      const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceExpressions();
+      const resizedDetections = faceapi.resizeResults(detections, displaySize);
+      canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+      faceapi.draw.drawDetections(canvas, resizedDetections);
+
+      if (detections.length > 0) {
+        const expressions = detections[0].expressions;
+        const emotion = Object.keys(expressions).reduce((a, b) => expressions[a] > expressions[b] ? a : b);
+
+        // താങ്കളുടെ തീം ഇവിടെ മാറാം
+        if (emotion === 'happy') {
+          document.body.classList.remove('dark');
+        } else if (emotion === 'sad' || emotion === 'angry') {
+          document.body.classList.add('dark');
+        }
+
+        console.log('മുൻപ് കണ്ടെത്തിയ മുഖഭാവം:', emotion);
+      }
+    }, 1000);
+  });
 </script>
 
 <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
