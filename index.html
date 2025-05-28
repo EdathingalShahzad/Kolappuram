@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,8 +16,10 @@
     />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: { 
@@ -27,7 +28,10 @@
               accent: "#8C6A4D", // Warm brown
               light: "#F8F5F0", // Cream/off-white
               dark: "#1E1A16", // Almost black
-              gold: "#D4AF37" // Metallic gold for accents
+              gold: "#D4AF37", // Metallic gold for accents
+              darkBg: "#121212",
+              darkCard: "#1E1E1E",
+              darkText: "#E0E0E0"
             },
             borderRadius: {
               none: "0px",
@@ -46,6 +50,10 @@
               'slide-up': 'slideUp 0.8s ease-out',
               'pulse-slow': 'pulse 6s infinite',
               'float': 'float 6s ease-in-out infinite',
+              'bounce-slow': 'bounceSlow 2s infinite',
+              'spin-slow': 'spin 8s linear infinite',
+              'wave': 'wave 1.5s ease-in-out infinite',
+              'tilt': 'tilt 10s ease-in-out infinite',
             },
             keyframes: {
               fadeIn: {
@@ -59,6 +67,18 @@
               float: {
                 '0%, 100%': { transform: 'translateY(0)' },
                 '50%': { transform: 'translateY(-20px)' },
+              },
+              bounceSlow: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-15px)' },
+              },
+              wave: {
+                '0%, 100%': { transform: 'rotate(-3deg)' },
+                '50%': { transform: 'rotate(3deg)' },
+              },
+              tilt: {
+                '0%, 100%': { transform: 'rotate(-1deg)' },
+                '50%': { transform: 'rotate(1deg)' },
               }
             }
           },
@@ -78,189 +98,254 @@
           overflow-x: hidden;
           background-color: #F8F5F0;
           scroll-behavior: smooth;
+          transition: background-color 0.5s ease, color 0.3s ease;
       }
-/* From Uiverse.io by Smit-Prajapati */ 
-.card {
-  width: 280px;
-  height: 280px;
-  background: white;
-  border-radius: 32px;
-  padding: 3px;
-  position: relative;
-  box-shadow: #604b4a30 0px 70px 30px -50px;
-  transition: all 0.5s ease-in-out;
-}
 
-.card .mail {
-  position: absolute;
-  right: 2rem;
-  top: 1.4rem;
-  background: transparent;
-  border: none;
-}
+      body.dark {
+          background-color: #121212;
+          color: #E0E0E0;
+      }
 
-.card .mail svg {
-  stroke: #fbb9b6;
-  stroke-width: 3px;
-}
+      .dark .section-light {
+          background-color: #1E1E1E !important;
+          color: #E0E0E0;
+      }
 
-.card .mail svg:hover {
-  stroke: #f55d56;
-}
+      .dark .luxury-card {
+          background-color: #1E1E1E;
+          border-color: rgba(179, 139, 89, 0.3);
+          color: #E0E0E0;
+      }
 
-.card .profile-pic {
-  position: absolute;
-  width: calc(100% - 6px);
-  height: calc(100% - 6px);
-  top: 3px;
-  left: 3px;
-  border-radius: 29px;
-  z-index: 1;
-  border: 0px solid #fbb9b6;
-  overflow: hidden;
-  transition: all 0.5s ease-in-out 0.2s, z-index 0.5s ease-in-out 0.2s;
-}
+      .dark .text-gray-600, .dark .text-gray-700 {
+          color: #B0B0B0 !important;
+      }
 
-.card .profile-pic img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  object-position: center center; /* Changed from 0px 0px to center */
-  transition: all 0.5s ease-in-out 0s;
-}
+      .dark .luxury-input {
+          background-color: #2D2D2D;
+          color: #E0E0E0;
+          border-color: #444;
+      }
 
+      .dark .navbar {
+          background-color: rgba(30, 30, 30, 0.95) !important;
+      }
 
+      .dark .mobile-menu {
+          background-color: #1E1E1E;
+      }
 
-.card .profile-pic svg {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-  -o-object-position: 0px 0px;
-  object-position: 0px 0px;
-  transform-origin: 45% 20%;
-  transition: all 0.5s ease-in-out 0s;
-}
+      .dark .btn-outline-gold {
+          border-color: #D4AF37;
+          color: #D4AF37;
+      }
 
-.card .bottom {
-  position: absolute;
-  bottom: 3px;
-  left: 3px;
-  right: 3px;
-  background: #fbb9b6;
-  top: 80%;
-  border-radius: 29px;
-  z-index: 2;
-  box-shadow: rgba(96, 75, 74, 0.1882352941) 0px 5px 5px 0px inset;
-  overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
-}
+      .dark .btn-outline-gold:hover {
+          background-color: #D4AF37;
+          color: #1E1E1E;
+      }
 
-.card .bottom .content {
-  position: absolute;
-  bottom: 0;
-  left: 1.5rem;
-  right: 1.5rem;
-  height: 160px;
-}
+      .dark .social-icon {
+          border-color: rgba(179, 139, 89, 0.5);
+      }
 
-.card .bottom .content .name {
-  display: block;
-  font-size: 1.2rem;
-  color: white;
-  font-weight: bold;
-}
+      .dark .social-icon:hover {
+          background-color: #B38B59;
+          color: #1E1E1E;
+      }
 
-.card .bottom .content .about-me {
-  display: block;
-  font-size: 0.9rem;
-  color: white;
-  margin-top: 1rem;
-}
+      /* From Uiverse.io by Smit-Prajapati */ 
+      .card {
+        width: 280px;
+        height: 280px;
+        background: white;
+        border-radius: 32px;
+        padding: 3px;
+        position: relative;
+        box-shadow: #604b4a30 0px 70px 30px -50px;
+        transition: all 0.5s ease-in-out;
+      }
 
-.card .bottom .bottom-bottom {
-  position: absolute;
-  bottom: 1rem;
-  left: 1.5rem;
-  right: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+      .dark .card {
+        background: #2D2D2D;
+      }
 
-.card .bottom .bottom-bottom .social-links-container {
-  display: flex;
-  gap: 1rem;
-}
+      .card .mail {
+          position: absolute;
+          right: 2rem;
+          top: 1.4rem;
+          background: transparent;
+          border: none;
+      }
 
-.card .bottom .bottom-bottom .social-links-container svg {
-  height: 20px;
-  fill: white;
-  filter: drop-shadow(0 5px 5px rgba(165, 132, 130, 0.1333333333));
-}
+      .card .mail svg {
+          stroke: #fbb9b6;
+          stroke-width: 3px;
+      }
 
-.card .bottom .bottom-bottom .social-links-container svg:hover {
-  fill: #f55d56;
-  transform: scale(1.2);
-}
+      .card .mail svg:hover {
+          stroke: #f55d56;
+      }
 
-.card .bottom .bottom-bottom .button {
-  background: white;
-  color: #fbb9b6;
-  border: none;
-  border-radius: 20px;
-  font-size: 0.6rem;
-  padding: 0.4rem 0.6rem;
-  box-shadow: rgba(165, 132, 130, 0.1333333333) 0px 5px 5px 0px;
-}
+      .card .profile-pic {
+          position: absolute;
+          width: calc(100% - 6px);
+          height: calc(100% - 6px);
+          top: 3px;
+          left: 3px;
+          border-radius: 29px;
+          z-index: 1;
+          border: 0px solid #fbb9b6;
+          overflow: hidden;
+          transition: all 0.5s ease-in-out 0.2s, z-index 0.5s ease-in-out 0.2s;
+      }
 
-.card .bottom .bottom-bottom .button:hover {
-  background: #f55d56;
-  color: white;
-}
+      .card .profile-pic img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          object-position: center center;
+          transition: all 0.5s ease-in-out 0s;
+      }
 
-.card:hover {
-  border-top-left-radius: 55px;
-}
+      .card .profile-pic svg {
+          width: 100%;
+          height: 100%;
+          -o-object-fit: cover;
+          object-fit: cover;
+          -o-object-position: 0px 0px;
+          object-position: 0px 0px;
+          transform-origin: 45% 20%;
+          transition: all 0.5s ease-in-out 0s;
+      }
 
-.card:hover .bottom {
-  top: 20%;
-  border-radius: 80px 29px 29px 29px;
-  transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0.2s;
-}
+      .card .bottom {
+          position: absolute;
+          bottom: 3px;
+          left: 3px;
+          right: 3px;
+          background: #fbb9b6;
+          top: 80%;
+          border-radius: 29px;
+          z-index: 2;
+          box-shadow: rgba(96, 75, 74, 0.1882352941) 0px 5px 5px 0px inset;
+          overflow: hidden;
+          transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
+      }
 
-.card:hover .profile-pic {
-  width: 100px;
-  height: 100px;
-  aspect-ratio: 1;
-  top: 10px;
-  left: 10px;
-  border-radius: 50%;
-  z-index: 3;
-  border: 7px solid #fbb9b6;
-  box-shadow: rgba(96, 75, 74, 0.1882352941) 0px 5px 5px 0px;
-  transition: all 0.5s ease-in-out, z-index 0.5s ease-in-out 0.1s;
-}
+      .dark .card .bottom {
+          background: #f55d56;
+      }
 
-.card:hover .profile-pic:hover {
-  transform: scale(1.3);
-  border-radius: 50%; /* Changed from 0px to maintain round shape */
-}
+      .card .bottom .content {
+          position: absolute;
+          bottom: 0;
+          left: 1.5rem;
+          right: 1.5rem;
+          height: 160px;
+      }
 
+      .card .bottom .content .name {
+          display: block;
+          font-size: 1.2rem;
+          color: white;
+          font-weight: bold;
+      }
 
-.card:hover .profile-pic img {
-  transform: scale(1); /* Changed from 2.5 to 1 to show full image */
-  object-position: center center; /* Changed from 0px 25px to center */
-  transition: all 0.5s ease-in-out 0.5s;
-}
+      .card .bottom .content .about-me {
+          display: block;
+          font-size: 0.9rem;
+          color: white;
+          margin-top: 1rem;
+      }
 
-.card:hover .profile-pic svg {
-  transform: scale(2.5);
-  transition: all 0.5s ease-in-out 0.5s;
-}
+      .card .bottom .bottom-bottom {
+          position: absolute;
+          bottom: 1rem;
+          left: 1.5rem;
+          right: 1.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+      }
+
+      .card .bottom .bottom-bottom .social-links-container {
+          display: flex;
+          gap: 1rem;
+      }
+
+      .card .bottom .bottom-bottom .social-links-container svg {
+          height: 20px;
+          fill: white;
+          filter: drop-shadow(0 5px 5px rgba(165, 132, 130, 0.1333333333));
+      }
+
+      .card .bottom .bottom-bottom .social-links-container svg:hover {
+          fill: #f55d56;
+          transform: scale(1.2);
+      }
+
+      .card .bottom .bottom-bottom .button {
+          background: white;
+          color: #fbb9b6;
+          border: none;
+          border-radius: 20px;
+          font-size: 0.6rem;
+          padding: 0.4rem 0.6rem;
+          box-shadow: rgba(165, 132, 130, 0.1333333333) 0px 5px 5px 0px;
+      }
+
+      .card .bottom .bottom-bottom .button:hover {
+          background: #f55d56;
+          color: white;
+      }
+
+      .card:hover {
+          border-top-left-radius: 55px;
+      }
+
+      .card:hover .bottom {
+          top: 20%;
+          border-radius: 80px 29px 29px 29px;
+          transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0.2s;
+      }
+
+      .card:hover .profile-pic {
+          width: 100px;
+          height: 100px;
+          aspect-ratio: 1;
+          top: 10px;
+          left: 10px;
+          border-radius: 50%;
+          z-index: 3;
+          border: 7px solid #fbb9b6;
+          box-shadow: rgba(96, 75, 74, 0.1882352941) 0px 5px 5px 0px;
+          transition: all 0.5s ease-in-out, z-index 0.5s ease-in-out 0.1s;
+      }
+
+      .card:hover .profile-pic:hover {
+          transform: scale(1.3);
+          border-radius: 50%;
+      }
+
+      .card:hover .profile-pic img {
+          transform: scale(1);
+          object-position: center center;
+          transition: all 0.5s ease-in-out 0.5s;
+      }
+
+      .card:hover .profile-pic svg {
+          transform: scale(2.5);
+          transition: all 0.5s ease-in-out 0.5s;
+      }
+
       h1, h2, h3, h4, h5 {
           font-family: 'Playfair Display', serif;
           font-weight: 600;
+      }
+
+      .dark h1, .dark h2, .dark h3, .dark h4, .dark h5 {
+          color: #F8F5F0;
       }
 
       .navbar {
@@ -269,9 +354,18 @@
           backdrop-filter: blur(10px);
       }
 
+      .dark .navbar {
+          background-color: rgba(30, 30, 30, 0.95) !important;
+      }
+
       .navbar.scrolled {
           background-color: rgba(248, 245, 240, 0.98) !important;
           box-shadow: 0 2px 30px rgba(30, 26, 22, 0.1);
+      }
+
+      .dark .navbar.scrolled {
+          background-color: rgba(30, 30, 30, 0.98) !important;
+          box-shadow: 0 2px 30px rgba(0, 0, 0, 0.3);
       }
 
       .service-card {
@@ -279,9 +373,17 @@
           border: 1px solid rgba(179, 139, 89, 0.2);
       }
 
+      .dark .service-card {
+          border-color: rgba(179, 139, 89, 0.3);
+      }
+
       .service-card:hover {
           transform: translateY(-5px);
           box-shadow: 0 15px 40px rgba(140, 106, 77, 0.15);
+      }
+
+      .dark .service-card:hover {
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
       }
 
       .gallery-item {
@@ -332,14 +434,26 @@
           box-shadow: 0 5px 15px rgba(179, 139, 89, 0.3);
       }
 
+      .dark .cta-button:hover {
+          box-shadow: 0 5px 15px rgba(179, 139, 89, 0.5);
+      }
+
       .room-card {
           transition: transform 0.3s ease, box-shadow 0.3s ease;
           border: 1px solid rgba(179, 139, 89, 0.2);
       }
 
+      .dark .room-card {
+          border-color: rgba(179, 139, 89, 0.3);
+      }
+
       .room-card:hover {
           transform: translateY(-5px);
           box-shadow: 0 15px 40px rgba(140, 106, 77, 0.15);
+      }
+
+      .dark .room-card:hover {
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
       }
 
       .room-overlay {
@@ -371,8 +485,6 @@
           border-color: #B38B59;
       }
 
-    
-
       /* Gold accent text */
       .gold-accent {
           color: #D4AF37;
@@ -394,32 +506,44 @@
           color: white;
       }
 
+      .dark .section-dark {
+          background-color: #1A1A1A;
+      }
+
       .service-card, .room-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
 
-  /* Adjust the overlay styles to work with the new effect */
-  .room-overlay {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    background: rgba(30, 26, 22, 0.6);
-    z-index: 2; /* Make sure overlay appears above the card effect */
-  }
+      /* Adjust the overlay styles to work with the new effect */
+      .room-overlay {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        background: rgba(30, 26, 22, 0.6);
+        z-index: 2;
+      }
 
-  .room-card:hover .room-overlay {
-    opacity: 1;
-  }
+      .dark .room-overlay {
+          background: rgba(0, 0, 0, 0.7);
+      }
 
-  .gallery-overlay {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    background: linear-gradient(to top, rgba(30, 26, 22, 0.8), transparent);
-    z-index: 2; /* Make sure overlay appears above the card effect */
-  }
+      .room-card:hover .room-overlay {
+        opacity: 1;
+      }
 
-  .gallery-item:hover .gallery-overlay {
-    opacity: 1;
-  }
+      .gallery-overlay {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        background: linear-gradient(to top, rgba(30, 26, 22, 0.8), transparent);
+        z-index: 2;
+      }
+
+      .dark .gallery-overlay {
+          background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      }
+
+      .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+      }
 
       .section-dark h2, 
       .section-dark h3,
@@ -474,6 +598,10 @@
           background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyMTEsIDE3MSwgODksIDAuMDUpIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+');
       }
 
+      .dark .gold-texture {
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyMTEsIDE3MSwgODksIDAuMSkiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=');
+      }
+
       /* Mobile Menu Styles */
       .mobile-menu {
           position: fixed;
@@ -504,10 +632,18 @@
       ::-webkit-scrollbar-track {
           background: #F8F5F0;
       }
+
+      .dark ::-webkit-scrollbar-track {
+          background: #1E1E1E;
+      }
       
       ::-webkit-scrollbar-thumb {
           background: #B38B59;
           border-radius: 4px;
+      }
+
+      .dark ::-webkit-scrollbar-thumb {
+          background: #8C6A4D;
       }
       
       /* Floating animation */
@@ -519,25 +655,596 @@
       .pulse-gold {
           animation: pulse-slow 4s infinite;
       }
-      
-      @keyframes pulse-gold {
-          0% {
-              box-shadow: 0 0 0 0 rgba(211, 175, 55, 0.4);
-          }
-          70% {
-              box-shadow: 0 0 0 15px rgba(211, 175, 55, 0);
-          }
-          100% {
-              box-shadow: 0 0 0 0 rgba(211, 175, 55, 0);
+
+      /* Theme toggle switch */
+      .theme-toggle {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 30px;
+      }
+
+      .theme-toggle input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+      }
+
+      .theme-slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: #3A2E26;
+          transition: .4s;
+          border-radius: 34px;
+      }
+
+      .theme-slider:before {
+          position: absolute;
+          content: "";
+          height: 22px;
+          width: 22px;
+          left: 4px;
+          bottom: 4px;
+          background-color: #D4AF37;
+          transition: .4s;
+          border-radius: 50%;
+      }
+
+      input:checked + .theme-slider {
+          background-color: #F8F5F0;
+      }
+
+      input:checked + .theme-slider:before {
+          transform: translateX(30px);
+          background-color: #1E1A16;
+      }
+
+      .theme-icon {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          color: white;
+          font-size: 14px;
+      }
+
+      .sun-icon {
+          left: 8px;
+      }
+
+      .moon-icon {
+          right: 8px;
+      }
+
+      /* Preloader */
+      .preloader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: #F8F5F0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+          transition: opacity 0.5s ease;
+      }
+
+      .dark .preloader {
+          background: #121212;
+      }
+
+      .preloader.fade-out {
+          opacity: 0;
+          pointer-events: none;
+      }
+
+      .loader {
+          width: 48px;
+          height: 48px;
+          border: 5px solid #B38B59;
+          border-bottom-color: transparent;
+          border-radius: 50%;
+          display: inline-block;
+          box-sizing: border-box;
+          animation: rotation 1s linear infinite;
+      }
+
+      @keyframes rotation {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+      }
+
+      /* Language selector */
+      .language-selector {
+          position: relative;
+          display: inline-block;
+      }
+
+      .language-button {
+          background: transparent;
+          border: 1px solid rgba(179, 139, 89, 0.3);
+          color: #3A2E26;
+          padding: 6px 12px;
+          border-radius: 20px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          transition: all 0.3s ease;
+      }
+
+      .dark .language-button {
+          color: #E0E0E0;
+          border-color: rgba(179, 139, 89, 0.5);
+      }
+
+      .language-button:hover {
+          background: rgba(179, 139, 89, 0.1);
+      }
+
+      .language-dropdown {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          padding: 8px 0;
+          min-width: 120px;
+          z-index: 100;
+          opacity: 0;
+          visibility: hidden;
+          transform: translateY(10px);
+          transition: all 0.3s ease;
+      }
+
+      .dark .language-dropdown {
+          background: #2D2D2D;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      }
+
+      .language-selector:hover .language-dropdown {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+      }
+
+      .language-option {
+          padding: 8px 16px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+      }
+
+      .language-option:hover {
+          background: rgba(179, 139, 89, 0.1);
+          color: #B38B59;
+      }
+
+      .dark .language-option:hover {
+          background: rgba(179, 139, 89, 0.2);
+      }
+
+      /* Image magnifier */
+      .magnifier-container {
+          position: relative;
+          overflow: hidden;
+          cursor: zoom-in;
+      }
+
+      .magnifier-glass {
+          position: absolute;
+          border: 3px solid #B38B59;
+          border-radius: 50%;
+          cursor: zoom-in;
+          width: 150px;
+          height: 150px;
+          pointer-events: none;
+          background-repeat: no-repeat;
+          opacity: 0;
+          transition: opacity 0.2s;
+      }
+
+      /* Floating action button */
+      .fab {
+          position: fixed;
+          bottom: 30px;
+          right: 30px;
+          width: 60px;
+          height: 60px;
+          background-color: #B38B59;
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 0 4px 20px rgba(179, 139, 89, 0.3);
+          cursor: pointer;
+          z-index: 90;
+          transition: all 0.3s ease;
+      }
+
+      .fab:hover {
+          transform: translateY(-5px) scale(1.05);
+          box-shadow: 0 8px 25px rgba(179, 139, 89, 0.4);
+      }
+
+      .fab i {
+          font-size: 24px;
+      }
+
+      /* Tooltip */
+      .tooltip {
+          position: relative;
+      }
+
+      .tooltip .tooltiptext {
+          visibility: hidden;
+          width: 120px;
+          background-color: #3A2E26;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 5px;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 50%;
+          transform: translateX(-50%);
+          opacity: 0;
+          transition: opacity 0.3s;
+      }
+
+      .dark .tooltip .tooltiptext {
+          background-color: #1E1E1E;
+          border: 1px solid #B38B59;
+      }
+
+      .tooltip .tooltiptext::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: #3A2E26 transparent transparent transparent;
+      }
+
+      .dark .tooltip .tooltiptext::after {
+          border-color: #1E1E1E transparent transparent transparent;
+      }
+
+      .tooltip:hover .tooltiptext {
+          visibility: visible;
+          opacity: 1;
+      }
+
+      /* Ripple effect */
+      .ripple {
+          position: relative;
+          overflow: hidden;
+      }
+
+      .ripple-effect {
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.4);
+          transform: scale(0);
+          animation: ripple 0.6s linear;
+          pointer-events: none;
+      }
+
+      @keyframes ripple {
+          to {
+              transform: scale(2.5);
+              opacity: 0;
           }
       }
 
+      /* 3D card effect */
+      .card-3d {
+          transform-style: preserve-3d;
+          transition: transform 0.5s ease;
+      }
+
+      .card-3d:hover {
+          transform: rotateY(10deg) rotateX(5deg) translateY(-10px);
+      }
+
+      /* Glow effect */
+      .glow {
+          transition: box-shadow 0.3s ease;
+      }
+
+      .glow:hover {
+          box-shadow: 0 0 20px rgba(211, 175, 55, 0.6);
+      }
+
+      /* Animated underline */
+      .animated-underline {
+          position: relative;
+      }
+
+      .animated-underline::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: -2px;
+          left: 0;
+          background-color: #D4AF37;
+          transition: width 0.3s ease;
+      }
+
+      .animated-underline:hover::after {
+          width: 100%;
+      }
+
+      /* Hover zoom */
+      .hover-zoom {
+          transition: transform 0.3s ease;
+      }
+
+      .hover-zoom:hover {
+          transform: scale(1.05);
+      }
+
+      /* Text shadow effect */
+      .text-shadow {
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .dark .text-shadow {
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Gradient border */
+      .gradient-border {
+          position: relative;
+      }
+
+      .gradient-border::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: inherit;
+          padding: 2px;
+          background: linear-gradient(45deg, #D4AF37, #B38B59, #8C6A4D);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+      }
+
+      /* Animated background */
+      .animated-bg {
+          background: linear-gradient(270deg, #F8F5F0, #E8E0D5, #F8F5F0);
+          background-size: 200% 200%;
+          animation: gradientBG 8s ease infinite;
+      }
+
+      .dark .animated-bg {
+          background: linear-gradient(270deg, #121212, #1E1E1E, #121212);
+      }
+
+      @keyframes gradientBG {
+          0% { background-position: 0% 50% }
+          50% { background-position: 100% 50% }
+          100% { background-position: 0% 50% }
+      }
+
+      /* Typewriter effect */
+      .typewriter {
+          overflow: hidden;
+          border-right: 3px solid #D4AF37;
+          white-space: nowrap;
+          margin: 0 auto;
+          letter-spacing: 2px;
+          animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+      }
+
+      @keyframes typing {
+          from { width: 0 }
+          to { width: 100% }
+      }
+
+      @keyframes blink-caret {
+          from, to { border-color: transparent }
+          50% { border-color: #D4AF37 }
+      }
+
+      /* Counter animation */
+      .counter {
+          font-size: 2.5rem;
+          font-weight: bold;
+          color: #D4AF37;
+      }
+
+      /* Scroll progress indicator */
+      .scroll-progress {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 0%;
+          height: 4px;
+          background: var(--gold-gradient);
+          z-index: 1000;
+          transition: width 0.1s ease;
+      }
+
+      /* Particle effect */
+      .particles {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          pointer-events: none;
+          z-index: 0;
+      }
+
+      .particle {
+          position: absolute;
+          background-color: rgba(211, 175, 55, 0.6);
+          border-radius: 50%;
+          pointer-events: none;
+      }
+
+      /* Custom checkbox */
+      .custom-checkbox {
+          display: block;
+          position: relative;
+          padding-left: 30px;
+          cursor: pointer;
+          user-select: none;
+      }
+
+      .custom-checkbox input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+      }
+
+      .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 20px;
+          width: 20px;
+          background-color: #F8F5F0;
+          border: 1px solid #B38B59;
+          border-radius: 4px;
+      }
+
+      .dark .checkmark {
+          background-color: #2D2D2D;
+      }
+
+      .custom-checkbox:hover input ~ .checkmark {
+          background-color: rgba(179, 139, 89, 0.1);
+      }
+
+      .custom-checkbox input:checked ~ .checkmark {
+          background-color: #B38B59;
+      }
+
+      .checkmark:after {
+          content: "";
+          position: absolute;
+          display: none;
+      }
+
+      .custom-checkbox input:checked ~ .checkmark:after {
+          display: block;
+      }
+
+      .custom-checkbox .checkmark:after {
+          left: 7px;
+          top: 3px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+      }
+
+      /* Custom radio buttons */
+      .custom-radio {
+          display: block;
+          position: relative;
+          padding-left: 30px;
+          cursor: pointer;
+          user-select: none;
+      }
+
+      .custom-radio input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+      }
+
+      .radio-mark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 20px;
+          width: 20px;
+          background-color: #F8F5F0;
+          border: 1px solid #B38B59;
+          border-radius: 50%;
+      }
+
+      .dark .radio-mark {
+          background-color: #2D2D2D;
+      }
+
+      .custom-radio:hover input ~ .radio-mark {
+          background-color: rgba(179, 139, 89, 0.1);
+      }
+
+      .custom-radio input:checked ~ .radio-mark {
+          background-color: #F8F5F0;
+      }
+
+      .radio-mark:after {
+          content: "";
+          position: absolute;
+          display: none;
+      }
+
+      .custom-radio input:checked ~ .radio-mark:after {
+          display: block;
+      }
+
+      .custom-radio .radio-mark:after {
+          top: 4px;
+          left: 4px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #B38B59;
+      }
+
+      /* Animated border */
+      .animated-border {
+          position: relative;
+      }
+
+      .animated-border::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border: 2px solid transparent;
+          border-radius: inherit;
+          background: linear-gradient(90deg, #D4AF37, #B38B59, #8C6A4D) border-box;
+          -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: destination-out;
+          mask-composite: exclude;
+          animation: borderAnimation 3s linear infinite;
+          background-size: 200% 100%;
+      }
+
+      @keyframes borderAnimation {
+          0% { background-position: 0% 50% }
+          100% { background-position: 200% 50% }
+      }
+
+      /* Responsive adjustments */
       @media (max-width: 767px) {
-          .menu-toggle {
-              display: block;
-              z-index: 50;
-          }
-          
           .hero h1 {
               font-size: 2.5rem;
               line-height: 1.2;
@@ -562,180 +1269,222 @@
           .testimonial-slide {
               padding: 1rem;
           }
+
+          .theme-toggle {
+              width: 50px;
+              height: 25px;
+          }
+
+          input:checked + .theme-slider:before {
+              transform: translateX(25px);
+          }
+
+          .theme-icon {
+              font-size: 12px;
+          }
       }
 
-      @media (min-width: 768px) and (max-width: 1023px) {
-          .service-card, .room-card {
-              margin-bottom: 1.5rem;
+      @media (max-width: 1024px) {
+          .card {
+              margin: 0 auto;
+              max-width: 100%;
           }
-          
-          .gallery-grid {
+      } 
+      
+      @media (max-width: 768px) {
+          .grid-cols-4, .grid-cols-3 {
               grid-template-columns: repeat(2, 1fr);
           }
       }
 
-      .hero h1 {
-  font-size: 2.5rem;
-  line-height: 1.2;
-  margin-left: 0;
-  padding: 0 20px;
-}
+      @media (max-width: 480px) {
+          .grid-cols-4, .grid-cols-3, .grid-cols-2 {
+              grid-template-columns: 1fr;
+          }
+      }
+      
+      @media (max-width: 1024px) {
+          .navbar .container {
+              padding: 0 15px;
+          }
+          
+          .md\\:hidden {
+              display: block;
+          }
+          
+          .md\\:flex {
+              display: none;
+          }
+      }
+      
+      @media (max-width: 640px) {
+          .booking-section form {
+              padding: 15px;
+          }
+          
+          .luxury-input, select {
+              width: 100%;
+          }
+      }
+      
+      @media (max-width: 768px) {
+          .testimonial-slide {
+              padding: 20px;
+          }
+      }
+      
+      @media (max-width: 768px) {
+          footer .grid-cols-4 {
+              grid-template-columns: 1fr;
+              gap: 30px;
+          }
+      }
+      
+      @media (max-width: 768px) {
+          section {
+              padding: 40px 20px;
+          }
+          
+          .container {
+              padding: 0 15px;
+          }
+      }
+      
+      .card {
+          width: 100%;
+          max-width: 280px;
+          height: auto;
+          min-height: 280px;
+          margin: 0 auto;
+      }
 
-@media (max-width: 767px) {
-  .hero {
-    text-align: center;
-  }
-  .hero .container {
-    justify-content: center;
-    margin-left: 0;
-  }
-}
-@media (max-width: 1024px) {
-  .card {
-    margin: 0 auto;
-    max-width: 100%;
-  }
-} 
-@media (max-width: 768px) {
-  .grid-cols-4, .grid-cols-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+      @media (max-width: 768px) {
+          .card {
+              max-width: 100%;
+          }
+          
+          .a {
+              width: 80px !important;
+              height: 80px !important;
+          }
+          
+          .a {
+              display: none;
+          }
+      }
+      #webchat .bpWebchat {
+    position: unset;
 
-@media (max-width: 480px) {
-  .grid-cols-4, .grid-cols-3, .grid-cols-2 {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 1024px) {
-  .navbar .container {
-    padding: 0 15px;
-  }
   
-  .md\\:hidden {
-    display: block;
-  }
   
-  .md\\:flex {
+   
+   
+  }
+
+  #webchat .bpFab {
     display: none;
   }
-}
-@media (max-width: 640px) {
-  .booking-section form {
-    padding: 15px;
-  }
-  
-  .luxury-input, select {
-    width: 100%;
-  }
-}
-@media (max-width: 768px) {
-  .testimonial-slide {
-    padding: 20px;
-  }
-}
-@media (max-width: 768px) {
-  footer .grid-cols-4 {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-}
-@media (max-width: 768px) {
-  section {
-    padding: 40px 20px;
-  }
-  
-  .container {
-    padding: 0 15px;
-  }
-}
-.card {
-  width: 100%;
-  max-width: 280px;
-  height: auto;
-  min-height: 280px;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .card {
-    max-width: 100%;
-  }
-  
-  .a {
-    width: 80px !important;
-    height: 80px !important;
-
-
-  }
-  .a{
-    display: none;
-  }
-  
-}
     </style>
   </head>
   <body>
+    <!-- Preloader -->
+    <div class="preloader">
+      <span class="loader"></span>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress"></div>
+
     <!-- Navbar -->
     <nav class="navbar fixed top-0 left-0 w-full z-50 py-4 px-6">
       <div class="container mx-auto flex justify-between items-center">
-        <a href="#home" class="text-3xl font-bold text-primary flex items-center">
-          <span class="text-secondary">KOLAPPURAM</span>
+        <a href="#home" class="text-3xl font-bold text-primary flex items-center hover:scale-105 transition-transform">
+          <span class="text-secondary dark:text-light">KOLAPPURAM</span>
           <span class="w-2 h-2 bg-primary rounded-full mx-2"></span>
-
         </a>
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-8">
-          <a href="#home" class="text-secondary hover:text-primary transition-colors relative group">
+          <a href="#home" class="text-secondary dark:text-light hover:text-primary transition-colors relative group animated-underline">
             <span>Home</span>
-            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
-          <a href="#about" class="text-secondary hover:text-primary transition-colors relative group">
+          <a href="#about" class="text-secondary dark:text-light hover:text-primary transition-colors relative group animated-underline">
             <span>About</span>
-            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
-          <a href="#rooms" class="text-secondary hover:text-primary transition-colors relative group">
+          <a href="#rooms" class="text-secondary dark:text-light hover:text-primary transition-colors relative group animated-underline">
             <span>Hotels</span>
-            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
-          <a href="#gallery" class="text-secondary hover:text-primary transition-colors relative group">
+          <a href="#gallery" class="text-secondary dark:text-light hover:text-primary transition-colors relative group animated-underline">
             <span>Gallery</span>
-            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
-          <a href="#contact" class="text-secondary hover:text-primary transition-colors relative group">
+          <a href="#contact" class="text-secondary dark:text-light hover:text-primary transition-colors relative group animated-underline">
             <span>Contact</span>
-            <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
+          
+          <!-- Theme Toggle -->
+          <label class="theme-toggle tooltip">
+            <input type="checkbox" id="theme-toggle">
+            <span class="theme-slider"></span>
+            <i class="ri-sun-line theme-icon sun-icon"></i>
+            <i class="ri-moon-line theme-icon moon-icon"></i>
+            <span class="tooltiptext">Toggle Theme</span>
+          </label>
+          
+          <!-- Language Selector -->
+          <div class="language-selector ml-2">
+            <button class="language-button ripple">
+              <i class="ri-global-line mr-1"></i> EN
+            </button>
+            <div class="language-dropdown">
+              <div class="language-option">English</div>
+              <div class="language-option">Malayalam</div>
+              <div class="language-option">Hindi</div>
+              <div class="language-option">Arabic</div>
+            </div>
+          </div>
+          
           <a href="#booking" class="ml-4"> 
-            <button class="bg-primary text-white px-6 py-2 rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap cta-button pulse-gold">
+            <button class="bg-primary text-white px-6 py-2 rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap cta-button pulse-gold ripple">
               Book Now
             </button>
           </a>
         </div>
 
         <!-- Mobile Menu Toggle -->
-        <button id="mobile-menu-toggle" class="md:hidden w-10 h-10 flex items-center justify-center menu-toggle">
-          <i class="ri-menu-line text-secondary text-2xl"></i>
+        <button id="mobile-menu-toggle" class="md:hidden w-10 h-10 flex items-center justify-center menu-toggle ripple">
+          <i class="ri-menu-line text-secondary dark:text-light text-2xl"></i>
         </button>
       </div>
     </nav>
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="mobile-menu">
-      <div class="flex justify-end p-6">
-        <button id="mobile-menu-close" class="w-10 h-10 flex items-center justify-center">
-          <i class="ri-close-line text-secondary text-2xl"></i>
+      <div class="flex justify-between items-center p-6">
+        <a href="#home" class="text-3xl font-bold text-primary">
+          <span class="text-secondary dark:text-light">KOLAPPURAM</span>
+        </a>
+        <button id="mobile-menu-close" class="w-10 h-10 flex items-center justify-center ripple">
+          <i class="ri-close-line text-secondary dark:text-light text-2xl"></i>
         </button>
       </div>
       <div class="flex flex-col items-center space-y-6 mt-10 px-6">
-        <a href="#about" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">About</a>
-        <a href="#rooms" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Hotels</a>
-        <a href="#amenities" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Amenities</a>
-        <a href="#gallery" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Gallery</a>
-        <a href="#testimonials" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Testimonials</a>
-        <a href="#contact" class="text-secondary text-xl w-full text-center py-3 border-b border-gray-100">Contact</a>
-        <button class="bg-primary text-white px-8 py-3 rounded-button mt-6 whitespace-nowrap w-full max-w-xs pulse-gold">
+        <a href="#about" class="text-secondary dark:text-light text-xl w-full text-center py-3 border-b border-gray-100 dark:border-gray-700 animated-underline">About</a>
+        <a href="#rooms" class="text-secondary dark:text-light text-xl w-full text-center py-3 border-b border-gray-100 dark:border-gray-700 animated-underline">Hotels</a>
+        <a href="#amenities" class="text-secondary dark:text-light text-xl w-full text-center py-3 border-b border-gray-100 dark:border-gray-700 animated-underline">Amenities</a>
+        <a href="#gallery" class="text-secondary dark:text-light text-xl w-full text-center py-3 border-b border-gray-100 dark:border-gray-700 animated-underline">Gallery</a>
+        <a href="#testimonials" class="text-secondary dark:text-light text-xl w-full text-center py-3 border-b border-gray-100 dark:border-gray-700 animated-underline">Testimonials</a>
+        <a href="#contact" class="text-secondary dark:text-light text-xl w-full text-center py-3 border-b border-gray-100 dark:border-gray-700 animated-underline">Contact</a>
+        
+        <div class="w-full flex justify-center py-4">
+          <label class="theme-toggle">
+            <input type="checkbox" id="mobile-theme-toggle">
+            <span class="theme-slider"></span>
+            <i class="ri-sun-line theme-icon sun-icon"></i>
+            <i class="ri-moon-line theme-icon moon-icon"></i>
+          </label>
+        </div>
+        
+        <button class="bg-primary text-white px-8 py-3 rounded-button mt-6 whitespace-nowrap w-full max-w-xs pulse-gold ripple">
           Book Now
         </button>
       </div>
@@ -743,26 +1492,26 @@
 
     <!-- Hero Section -->
     <section id="home" class="relative h-screen overflow-hidden hero">
+      <div class="particles" id="particles-js"></div>
       <div class="absolute inset-0" style="background-image: url(./ChatGPT\ Image\ May\ 15\,\ 2025\,\ 12_20_01\ PM.png); background-size: cover; background-position: center;"></div>
       <div class="absolute inset-0 bg-gradient-to-r from-black/50 to-black/10"></div>
 
       <div class="container mx-auto h-full flex items-center">
         <div class="relative z-10 max-w-2xl px-6 md:px-0 text-white" data-aos="fade-up" data-aos-delay="300" style="margin-left: 50px;">
           <h1 class="text-4xl md:text-6xl font-semibold leading-tight mb-6">
-             <span class="text-gradient">Kolappuram</span><br>
+            <span class="text-gradient typewriter">Kolappuram</span><br>
           </h1>
           <p class="text-lg md:text-xl mb-8 text-gray-200">
-        
             Experience the serene beauty of Kerala's hidden gem with unparalleled comfort and sophistication.
           </p>
           <div class="flex flex-wrap gap-4">
             <a href="#about">  
-              <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg transition-all">
+              <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg transition-all ripple">
                 Explore Kolappuram
               </button>
             </a>
             <a href="#gallery">  
-              <button class="btn-outline-gold px-8 py-3 rounded-button hover:shadow-lg transition-all">
+              <button class="btn-outline-gold px-8 py-3 rounded-button hover:shadow-lg transition-all ripple">
                 View Gallery
               </button>
             </a>
@@ -773,7 +1522,7 @@
       <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white">
         <span class="text-sm mb-2">Scroll to discover</span>
         <div class="w-8 h-12 border-2 border-white rounded-full flex justify-center">
-          <div class="w-1.5 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
+          <div class="w-1.5 h-3 bg-white rounded-full mt-2 animate-bounce-slow"></div>
         </div>
       </div>
     </section>
@@ -783,69 +1532,72 @@
       <div class="container mx-auto px-6">
         <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Welcome to Kolappuram</h2>
-          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
+          <p class="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mt-8">
             Nestled in the heart of Kerala's Malappuram district, Kolappuram offers a unique blend of traditional charm and modern luxury. Our carefully curated experiences bring you the best of this serene village.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div class="slide-up" data-aos="fade-right">
-            <div class="relative overflow-hidden rounded-xl shadow-xl">
-              <img
-                src="./ChatGPT Image May 15, 2025, 12_20_01 PM.png"
-                class="w-full h-auto object-cover rounded-xl hover:scale-105 transition-transform duration-500"
-              />
+            <div class="relative overflow-hidden rounded-xl shadow-xl card-3d">
+              <div class="magnifier-container">
+                <img
+                  src="./ChatGPT Image May 15, 2025, 12_20_01 PM.png"
+                  class="w-full h-auto object-cover rounded-xl hover-zoom"
+                />
+                <div class="magnifier-glass"></div>
+              </div>
               <div class="absolute inset-0 border-8 border-white opacity-20 pointer-events-none"></div>
             </div>
           </div>
 
           <div class="slide-up" data-aos="fade-left" data-aos-delay="200">
             <h3 class="text-3xl font-semibold mb-6">Our Story</h3>
-            <p class="text-gray-700 mb-6">
+            <p class="text-gray-700 dark:text-gray-300 mb-6">
               Kolappuram is a peaceful village in Malappuram district, Kerala, known for its lush landscapes and rich cultural heritage. While little is documented about its specific history, it shares in Kerala's storied past and the legacy of the Malabar region.
             </p>
-            <p class="text-gray-700 mb-8">
+            <p class="text-gray-700 dark:text-gray-300 mb-8">
               Today, we've carefully selected the finest accommodations and experiences in Kolappuram to bring you luxury amidst authentic village life. Our philosophy combines impeccable service with the natural beauty of this special place.
             </p>
 
             <div class="grid grid-cols-2 gap-6">
               <div class="flex items-center" data-aos="fade-up" data-aos-delay="100">
-                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white hover-zoom">
                   <i class="ri-user-3-line text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold">Population</h4>
-                  <p class="text-sm text-gray-600">35,534</p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">35,534</p>
                 </div>
               </div>
 
               <div class="flex items-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white hover-zoom">
                   <i class="ri-community-line text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold">Community</h4>
-                  <p class="text-sm text-gray-600">Warm & welcoming</p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">Warm & welcoming</p>
                 </div>
               </div>
 
               <div class="flex items-center" data-aos="fade-up" data-aos-delay="300">
-                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white hover-zoom">
                   <i class="ri-restaurant-line text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold">Cuisine</h4>
-                  <p class="text-sm text-gray-600">Authentic Kerala flavors</p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">Authentic Kerala flavors</p>
                 </div>
               </div>
 
               <div class="flex items-center" data-aos="fade-up" data-aos-delay="400">
-                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 gold-bg text-white hover-zoom">
                   <i class="ri-leaf-line text-xl"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold">Nature</h4>
-                  <p class="text-sm text-gray-600">Lush green landscapes</p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">Lush green landscapes</p>
                 </div>
               </div>
             </div>
@@ -854,53 +1606,80 @@
       </div>
     </section>
 
-<section class="py-20 section-light gold-texture"style="background-color: rgba(255, 221, 108, 0.2);">
-  <div class="text-center mb-16" data-aos="fade-up">
-          <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Kolappuram Authorities</h2>
-          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
-Kolappuram authorities manage law and order, local governance, and public welfare. They ensure safety, implement policies, and support community development.          </p>
+    <!-- Kolappuram Authorities Section -->
+    <section class="py-20 section-light gold-texture" style="background-color: rgba(255, 221, 108, 0.2);">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Kolappuram Authorities</h2>
+        <p class="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mt-8">
+          Kolappuram authorities manage law and order, local governance, and public welfare. They ensure safety, implement policies, and support community development.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-8">
+        <!-- From Uiverse.io by Smit-Prajapati --> 
+        <div class="card" style="background-color: black;">
+          <button class="mail">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+          </button>
+          <div class="profile-pic">
+            <img class="a" src="./WhatsApp Image 2025-05-27 at 10.32.40 PM.jpeg" alt="">
+            <img class="b" src="./WhatsApp Image 2025-05-27 at 10.32.40 PM.jpeg" alt="" style="width: 100%;"> 
+          </div>
+          <div class="bottom">
+            <div class="content">
+              <span class="name">BABY</span>
+              <span class="about-me" style="margin-top: -4px;">The Kolappuram ward member represents the community and drives local development.</span>
+            </div>
+            <div class="bottom-bottom">
+              <div class="social-links-container">
+                <div style="width: 100%; display: flex;">
+                  <button class="button" style="border: 2px solid rgba(84, 83, 83, 0.507); color: #000000; font-weight: bold; margin-top: 10px; background-color: #ff9a94;">Kolappuram</button>
+                  <button class="button" style="margin-left: 40px;border: 2px solid rgba(84, 83, 83, 0.507); color: #000000; font-weight: bold; margin-top: 10px; background-color: #ff9a94;">Ward Member</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- From Uiverse.io by Smit-Prajapati --> 
-<div class="card" style="background-color: black; ">
-        <button class="mail">
+        <!-- Second Card -->
+        <div class="card" style="background-color: black;">
+          <button class="mail">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-        </button>
-        <div class="profile-pic">
-          
-                
-            <img class="a" src="./WhatsApp Image 2025-05-27 at 10.32.40 PM.jpeg" alt="" style="">
-            <img class="b" src="./WhatsApp Image 2025-05-27 at 10.32.40 PM.jpeg" alt="" style="width: 100%; "> 
-        </div>
-        <div class="bottom">
+          </button>
+          <div class="profile-pic">
+            <img class="a" src="./images.jfif" alt="">
+            <img class="b" src="./images.jfif" alt="" style="width: 100%;"> 
+          </div>
+          <div class="bottom">
             <div class="content">
-                <span class="name">BABY</span>
-                <span class="about-me" style="margin-top: -4px;">The Kolappuram ward member represents the community and drives local development.</span>
+              <span class="name">RIYAS</span>
+              <span class="about-me" style="margin-top: -4px;">Community leader working for social welfare and development.</span>
             </div>
-           <div class="bottom-bottom">
-            <div class="social-links-container">
-              
-           <div style="width: 100%; display: flex;">
-            <button class="button" style="border: 2px solid rgba(84, 83, 83, 0.507); color: #000000; font-weight: bold; margin-top: 10px; background-color: #ff9a94;" >Kolappuram</button>
-             <button class="button" style=" margin-left: 40px;border: 2px solid rgba(84, 83, 83, 0.507); color: #000000; font-weight: bold; margin-top: 10px; background-color: #ff9a94;">Ward Member</button></div>
-           </div>
+            <div class="bottom-bottom">
+              <div class="social-links-container">
+                <div style="width: 100%; display: flex;">
+                  <button class="button" style="border: 2px solid rgba(84, 83, 83, 0.507); color: #000000; font-weight: bold; margin-top: 10px; background-color: #ff9a94;">Social Worker</button>
+                  <button class="button" style="margin-left: 40px;border: 2px solid rgba(84, 83, 83, 0.507); color: #000000; font-weight: bold; margin-top: 10px; background-color: #ff9a94;">Since 2010</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-        
-</section>
+      </div>
+    </section>
 
     <!-- Services Section -->
     <section class="py-20 bg-white gold-texture" style="background-color: rgba(255, 221, 108, 0.2);">
       <div class="container mx-auto px-6">
         <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Kolappuram Highlights</h2>
-          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
+          <p class="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mt-8">
             Discover the finest experiences Kolappuram has to offer, carefully selected for the discerning traveler.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+          <div class="service-card luxury-card rounded-lg overflow-hidden glow" data-aos="fade-up" data-aos-delay="100">
             <div class="h-64 overflow-hidden">
               <img
                 src="./WhatsApp Image 2025-05-15 at 1.34.46 PM.jpeg"
@@ -910,7 +1689,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
             </div>
             <div class="p-6">
               <h3 class="text-xl font-semibold mb-2">Dosthana Club</h3>
-              <p class="text-gray-600 mb-4">
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
                 Founded in 1972, this community hub promotes sports and culture, celebrating 50 years with vibrant events.
               </p>
               <a href="#" class="text-primary flex items-center font-medium hover:underline group">
@@ -919,7 +1698,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
             </div>
           </div>
 
-          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-card luxury-card rounded-lg overflow-hidden glow" data-aos="fade-up" data-aos-delay="200">
             <div class="h-64 overflow-hidden">
               <img
                 src="./WhatsApp Image 2025-05-16 at 13.28.38_1564239d.jpg"
@@ -929,7 +1708,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
             </div>
             <div class="p-6">
               <h3 class="text-xl font-semibold mb-2">Nava Kerala Samskarika Vedi</h3>
-              <p class="text-gray-600 mb-4">
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
                 Renowned for its tandoori specialties and biryanis, offering dine-in and delivery with excellent reviews.
               </p>
               <a href="#" class="text-primary flex items-center font-medium hover:underline group">
@@ -938,7 +1717,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
             </div>
           </div>
 
-          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+          <div class="service-card luxury-card rounded-lg overflow-hidden glow" data-aos="fade-up" data-aos-delay="300">
             <div class="h-64 overflow-hidden">
               <img
                 src="./WhatsApp Image 2025-05-15 at 14.00.20_3fd2a1d0.jpg"
@@ -948,7 +1727,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
             </div>
             <div class="p-6">
               <h3 class="text-xl font-semibold mb-2">Nibrasul Islam Madrasa</h3>
-              <p class="text-gray-600 mb-4">
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
                 A center for Arabic and Islamic studies that actively supports community religious events.
               </p>
               <a href="#" class="text-primary flex items-center font-medium hover:underline group">
@@ -957,7 +1736,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
             </div>
           </div>
 
-          <div class="service-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+          <div class="service-card luxury-card rounded-lg overflow-hidden glow" data-aos="fade-up" data-aos-delay="400">
             <div class="h-64 overflow-hidden">
               <img
                 src="./ChatGPT Image May 16, 2025, 10_54_53 AM.png"
@@ -967,7 +1746,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
             </div>
             <div class="p-6">
               <h3 class="text-xl font-semibold mb-2">GHS Kolappuram</h3>
-              <p class="text-gray-600 mb-4">
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
                 Established in 1924, this government school serves 900 students with strong academics and cultural programs.
               </p>
               <a href="#" class="text-primary flex items-center font-medium hover:underline group">
@@ -984,13 +1763,13 @@ Kolappuram authorities manage law and order, local governance, and public welfar
       <div class="container mx-auto px-6">
         <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Premium Accommodations</h2>
-          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
+          <p class="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mt-8">
             Experience Kolappuram in comfort and style at our carefully selected premium hotels.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div class="room-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+          <div class="room-card luxury-card rounded-lg overflow-hidden glow" data-aos="fade-up" data-aos-delay="100">
             <div class="relative h-80">
               <img
                 src="./WhatsApp Image 2025-05-15 at 1.44.44 PM.jpeg"
@@ -998,9 +1777,11 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
               <div class="room-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
-              <a href="https://hotelthandoorhut.dialndial.com/">  <button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
-                  View Details
-                </button></a>
+                <a href="https://hotelthandoorhut.dialndial.com/" class="ripple">  
+                  <button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
+                    View Details
+                  </button>
+                </a>
               </div>
             </div>
             <div class="p-6">
@@ -1014,18 +1795,18 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                   <i class="ri-star-half-fill"></i>
                 </div>
               </div>
-              <p class="text-gray-600 mb-4">
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
                 A popular local eatery known for its delicious grilled and tandoori dishes, offering authentic flavors in a cozy atmosphere.
               </p>
               <div class="flex flex-wrap gap-3">
-                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Restaurant</span>
-                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Free WiFi</span>
-                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">AC</span>
+                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">Restaurant</span>
+                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">Free WiFi</span>
+                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">AC</span>
               </div>
             </div>
           </div>
 
-          <div class="room-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+          <div class="room-card luxury-card rounded-lg overflow-hidden glow" data-aos="fade-up" data-aos-delay="200">
             <div class="relative h-80">
               <img
                 src="./WhatsApp Image 2025-05-16 at 10.11.12_db344e04.jpg"
@@ -1033,9 +1814,11 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
               <div class="room-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
-                <a href="https://hotelhilux.dialndial.com/"><button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
-                  View Details
-                </button></a>
+                <a href="https://hotelhilux.dialndial.com/" class="ripple">
+                  <button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
+                    View Details
+                  </button>
+                </a>
               </div>
             </div>
             <div class="p-6">
@@ -1049,28 +1832,30 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                   <i class="ri-star-line"></i>
                 </div>
               </div>
-              <p class="text-gray-600 mb-4">
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
                 A well-established hotel providing comfortable accommodation and friendly service, favored for its clean rooms and good hospitality.
               </p>
               <div class="flex flex-wrap gap-3">
-                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Luxury Rooms</span>
-                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Restaurant</span>
-                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Pool</span>
+                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">Luxury Rooms</span>
+                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">Restaurant</span>
+                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">Pool</span>
               </div>
             </div>
           </div>
 
-          <div class="room-card luxury-card rounded-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+          <div class="room-card luxury-card rounded-lg overflow-hidden glow" data-aos="fade-up" data-aos-delay="300">
             <div class="relative h-80">
               <img
-                src="./WhatsApp Image 2025-05-16 at 10.11.11_5a6a527b.jpg"
+                src="./WhatsApp Image 2025-05-16 at                10.11.11_5a6a527b.jpg"
                 alt="AL-Farooj"
                 class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
               <div class="room-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity">
-                <a href="https://restaurant-guru.in/Al-Farooj-Kolappuram"><button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
-                  View Details
-                </button></a>
+                <a href="https://restaurant-guru.in/Al-Farooj-Kolappuram" class="ripple">
+                  <button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
+                    View Details
+                  </button>
+                </a>
               </div>
             </div>
             <div class="p-6">
@@ -1084,22 +1869,22 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                   <i class="ri-star-fill"></i>
                 </div>
               </div>
-              <p class="text-gray-600 mb-4">
+              <p class="text-gray-600 dark:text-gray-300 mb-4">
                 Famous for Middle Eastern and Indian fast food, especially shawarmas and grilled dishes, with a vibrant ambiance.
               </p>
               <div class="flex flex-wrap gap-3">
-                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Fast Food</span>
-                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Dine-in</span>
-                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">Takeaway</span>
+                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">Fast Food</span>
+                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">Dine-in</span>
+                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">Takeaway</span>
               </div>
             </div>
           </div>
         </div>
 
         <div class="text-center mt-12" data-aos="fade-up">
-          <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg">
+          <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg ripple">
             View All Accommodations
-                   </button>
+          </button>
         </div>
       </div>
     </section>
@@ -1116,11 +1901,11 @@ Kolappuram authorities manage law and order, local governance, and public welfar
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <!-- Nature & Landscape -->
-          <div class="bg-secondary/50 p-8 rounded-lg backdrop-blur-sm" data-aos="fade-up" data-aos-delay="100">
+          <div class="bg-secondary/50 dark:bg-darkCard p-8 rounded-lg backdrop-blur-sm hover-zoom" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-2xl font-semibold mb-6 text-center gold-accent">Nature & Landscape</h3>
             <div class="space-y-5">
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-leaf-line"></i>
                 </div>
                 <div>
@@ -1131,7 +1916,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-water-line"></i>
                 </div>
                 <div>
@@ -1142,7 +1927,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-landscape-line"></i>
                 </div>
                 <div>
@@ -1156,11 +1941,11 @@ Kolappuram authorities manage law and order, local governance, and public welfar
           </div>
 
           <!-- Culture & Community -->
-          <div class="bg-secondary/50 p-8 rounded-lg backdrop-blur-sm" data-aos="fade-up" data-aos-delay="200">
+          <div class="bg-secondary/50 dark:bg-darkCard p-8 rounded-lg backdrop-blur-sm hover-zoom" data-aos="fade-up" data-aos-delay="200">
             <h3 class="text-2xl font-semibold mb-6 text-center gold-accent">Culture & Community</h3>
             <div class="space-y-5">
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-group-line"></i>
                 </div>
                 <div>
@@ -1171,7 +1956,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-calendar-event-line"></i>
                 </div>
                 <div>
@@ -1182,7 +1967,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-restaurant-2-line"></i>
                 </div>
                 <div>
@@ -1196,11 +1981,11 @@ Kolappuram authorities manage law and order, local governance, and public welfar
           </div>
 
           <!-- Recreation & Activities -->
-          <div class="bg-secondary/50 p-8 rounded-lg backdrop-blur-sm" data-aos="fade-up" data-aos-delay="300">
+          <div class="bg-secondary/50 dark:bg-darkCard p-8 rounded-lg backdrop-blur-sm hover-zoom" data-aos="fade-up" data-aos-delay="300">
             <h3 class="text-2xl font-semibold mb-6 text-center gold-accent">Experiences</h3>
             <div class="space-y-5">
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-walk-line"></i>
                 </div>
                 <div>
@@ -1211,7 +1996,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-cup-line"></i>
                 </div>
                 <div>
@@ -1222,7 +2007,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
               </div>
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-artboard-2-line"></i>
                 </div>
                 <div>
@@ -1243,20 +2028,20 @@ Kolappuram authorities manage law and order, local governance, and public welfar
       <div class="container mx-auto px-6">
         <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Kolappuram Gallery</h2>
-          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
+          <p class="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mt-8">
             Explore the beauty and elegance of Kolappuram through our curated collection of images.
           </p>
         </div>
 
         <div class="flex justify-center mb-10" data-aos="fade-up">
-          <div class="inline-flex bg-gray-100 p-1 rounded-full">
-            <button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap">
+          <div class="inline-flex bg-gray-100 dark:bg-gray-700 p-1 rounded-full">
+            <button class="px-6 py-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 whitespace-nowrap">
               Places to Visit
             </button>
-            <button class="px-6 py-2 rounded-full text-gray-700 hover:bg-gray-200 whitespace-nowrap">
+            <button class="px-6 py-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 whitespace-nowrap">
               Play With Nature
             </button>
-            
+          
           </div>
         </div>
 
@@ -1409,7 +2194,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
         </div>
 
         <div class="text-center mt-12" data-aos="fade-up">
-          <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg">
+          <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg ripple">
             View Full Gallery
           </button>
         </div>
@@ -1428,9 +2213,9 @@ Kolappuram authorities manage law and order, local governance, and public welfar
 
         <div class="relative max-w-4xl mx-auto" data-aos="fade-up">
           <div class="kolappuram-slide active">
-            <div class="bg-secondary/50 p-8 md:p-12 rounded-lg backdrop-blur-sm">
+            <div class="bg-secondary/50 dark:bg-darkCard p-8 md:p-12 rounded-lg backdrop-blur-sm">
               <div class="flex flex-col md:flex-row items-center mb-6">
-                <div class="w-20 h-20 rounded-full overflow-hidden mb-4 md:mb-0 md:mr-6 border-2 border-primary">
+                <div class="w-20 h-20 rounded-full overflow-hidden mb-4 md:mb-0 md:mr-6 border-2 border-primary hover-zoom">
                   <img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQINVyZtwl6OTECc562qvJebhZHX-2QT2ouMg&s"
                     alt="Sarah Johnson"
@@ -1473,14 +2258,14 @@ Kolappuram authorities manage law and order, local governance, and public welfar
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div data-aos="fade-right">
             <h2 class="text-4xl font-semibold mb-6 luxury-border inline-block pb-2">Plan Your Visit</h2>
-            <p class="text-gray-600 mb-8">
+            <p class="text-gray-600 dark:text-gray-300 mb-8">
               Reserve your stay in Kolappuram and experience the perfect blend of Kerala tradition and modern comfort.
             </p>
 
-            <div class="bg-white p-8 rounded-lg shadow-md" data-aos="zoom-in">
+            <div class="bg-white dark:bg-darkCard p-8 rounded-lg shadow-md glow" data-aos="zoom-in">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label class="block text-gray-700 mb-2">Check-in Date</label>
+                  <label class="block text-gray-700 dark:text-gray-300 mb-2">Check-in Date</label>
                   <div class="relative">
                     <input
                       type="date"
@@ -1494,7 +2279,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
 
                 <div>
-                  <label class="block text-gray-700 mb-2">Check-out Date</label>
+                  <label class="block text-gray-700 dark:text-gray-300 mb-2">Check-out Date</label>
                   <div class="relative">
                     <input
                       type="date"
@@ -1508,7 +2293,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
 
                 <div>
-                  <label class="block text-gray-700 mb-2">Adults</label>
+                  <label class="block text-gray-700 dark:text-gray-300 mb-2">Adults</label>
                   <div class="relative">
                     <select class="w-full p-3 luxury-input rounded appearance-none">
                       <option>1</option>
@@ -1523,7 +2308,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
 
                 <div>
-                  <label class="block text-gray-700 mb-2">Children</label>
+                  <label class="block text-gray-700 dark:text-gray-300 mb-2">Children</label>
                   <div class="relative">
                     <select class="w-full p-3 luxury-input rounded appearance-none">
                       <option>0</option>
@@ -1539,7 +2324,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
               </div>
 
               <div class="mb-6">
-                <label class="block text-gray-700 mb-2">Accommodation Type</label>
+                <label class="block text-gray-700 dark:text-gray-300 mb-2">Accommodation Type</label>
                 <div class="relative">
                   <select class="w-full p-3 luxury-input rounded appearance-none">
                     <option>Premium Hotel Room</option>
@@ -1554,20 +2339,20 @@ Kolappuram authorities manage law and order, local governance, and public welfar
               </div>
 
               <div class="mb-6">
-                <label class="block text-gray-700 mb-2">Special Requests</label>
+                <label class="block text-gray-700 dark:text-gray-300 mb-2">Special Requests</label>
                 <textarea
                   class="w-full p-3 luxury-input rounded focus:outline-none focus:border-primary h-24"
                   placeholder="Dietary needs, accessibility requirements, etc."
                 ></textarea>
               </div>
 
-              <button class="w-full cta-button py-3 rounded-button hover:shadow-lg">
+              <button class="w-full cta-button py-3 rounded-button hover:shadow-lg ripple">
                 Check Availability
               </button>
             </div>
           </div>
 
-          <div class="relative h-full min-h-[500px] rounded-lg overflow-hidden shadow-xl" data-aos="fade-left">
+          <div class="relative h-full min-h-[500px] rounded-lg overflow-hidden shadow-xl hover-zoom" data-aos="fade-left">
             <img
               src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
               alt="Kolappuram Landscape"
@@ -1579,7 +2364,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 <p class="mb-4 text-gray-200">
                   Book a 5-night stay and receive a complimentary traditional Kerala massage and sunset village walk.
                 </p>
-                <button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg">
+                <button class="btn-outline-gold px-6 py-2 rounded-button hover:shadow-lg ripple">
                   Learn More
                 </button>
               </div>
@@ -1594,23 +2379,23 @@ Kolappuram authorities manage law and order, local governance, and public welfar
       <div class="container mx-auto px-6">
         <div class="text-center mb-16" data-aos="fade-up">
           <h2 class="text-4xl font-semibold mb-4 luxury-border inline-block pb-2">Contact Us</h2>
-          <p class="text-gray-600 max-w-3xl mx-auto mt-8">
+          <p class="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mt-8">
             Have questions or need assistance? Our team is here to help you plan your perfect Kolappuram experience.
           </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div class="luxury-card p-8 rounded-lg" data-aos="fade-up" data-aos-delay="100">
+          <div class="luxury-card p-8 rounded-lg glow" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-xl font-semibold mb-6">Kolappuram Information</h3>
 
             <div class="space-y-6">
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-map-pin-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1">Location</h4>
-                  <p class="text-gray-600">
+                  <p class="text-gray-600 dark:text-gray-300">
                     Malappuram district, Kerala<br>
                     Near NH 66, between Tirur and Kottakkal
                   </p>
@@ -1618,12 +2403,12 @@ Kolappuram authorities manage law and order, local governance, and public welfar
               </div>
 
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-phone-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1">Phone</h4>
-                  <p class="text-gray-600">
+                  <p class="text-gray-600 dark:text-gray-300">
                     Reservations: +91 93884 03220<br>
                     Information: +91 98950 12345
                   </p>
@@ -1631,12 +2416,12 @@ Kolappuram authorities manage law and order, local governance, and public welfar
               </div>
 
               <div class="flex items-start">
-                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white">
+                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-4 mt-1 gold-bg text-white hover-zoom">
                   <i class="ri-mail-line"></i>
                 </div>
                 <div>
                   <h4 class="font-semibold mb-1">Email</h4>
-                  <p class="text-gray-600">
+                  <p class="text-gray-600 dark:text-gray-300">
                     info@kolappuram.com<br>
                     
                   </p>
@@ -1647,29 +2432,29 @@ Kolappuram authorities manage law and order, local governance, and public welfar
             <div class="mt-8">
               <h4 class="font-semibold mb-4">Follow Our Journey</h4>
               <div class="flex space-x-4">
-                <a href="https://www.facebook.com/share/18rnEd5ikY/" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
+                <a href="https://www.facebook.com/share/18rnEd5ikY/" class="social-icon w-10 h-10 rounded-full flex items-center justify-center ripple">
                   <i class="ri-facebook-fill"></i>
                 </a>
-                <a href="https://www.instagram.com/kolappuram_live?igsh=cWVkZ2NycGhwZ25t" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
+                <a href="https://www.instagram.com/kolappuram_live?igsh=cWVkZ2NycGhwZ25t" class="social-icon w-10 h-10 rounded-full flex items-center justify-center ripple">
                   <i class="ri-instagram-line"></i>
                 </a>
-                <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
+                <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center ripple">
                   <i class="ri-twitter-x-line"></i>
                 </a>
-                <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
+                <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center ripple">
                   <i class="ri-youtube-line"></i>
                 </a>
               </div>
             </div>
           </div>
 
-          <div class="lg:col-span-2 luxury-card p-8 rounded-lg" data-aos="fade-up" data-aos-delay="200">
+          <div class="lg:col-span-2 luxury-card p-8 rounded-lg glow" data-aos="fade-up" data-aos-delay="200">
             <h3 class="text-xl font-semibold mb-6">Send Us a Message</h3>
 
             <form>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label class="block text-gray-700 mb-2">First Name</label>
+                  <label class="block text-gray-700 dark:text-gray-300 mb-2">First Name</label>
                   <input
                     type="text"
                     class="w-full p-3 luxury-input rounded"
@@ -1678,7 +2463,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
 
                 <div>
-                  <label class="block text-gray-700 mb-2">Last Name</label>
+                  <label class="block text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
                   <input
                     type="text"
                     class="w-full p-3 luxury-input rounded"
@@ -1689,7 +2474,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <label class="block text-gray-700 mb-2">Email</label>
+                  <label class="block text-gray-700 dark:text-gray-300 mb-2">Email</label>
                   <input
                     type="email"
                     class="w-full p-3 luxury-input rounded"
@@ -1698,7 +2483,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 </div>
 
                 <div>
-                  <label class="block text-gray-700 mb-2">Phone</label>
+                  <label class="block text-gray-700 dark:text-gray-300 mb-2">Phone</label>
                   <input
                     type="tel"
                     class="w-full p-3 luxury-input rounded"
@@ -1708,7 +2493,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
               </div>
 
               <div class="mb-6">
-                <label class="block text-gray-700 mb-2">Subject</label>
+                <label class="block text-gray-700 dark:text-gray-300 mb-2">Subject</label>
                 <select class="w-full p-3 luxury-input rounded appearance-none">
                   <option>Reservation Inquiry</option>
                   <option>Experience Planning</option>
@@ -1719,7 +2504,7 @@ Kolappuram authorities manage law and order, local governance, and public welfar
               </div>
 
               <div class="mb-6">
-                <label class="block text-gray-700 mb-2">Message</label>
+                <label class="block text-gray-700 dark:text-gray-300 mb-2">Message</label>
                 <textarea
                   class="w-full p-3 luxury-input rounded h-32"
                   placeholder="How can we assist you?"
@@ -1730,13 +2515,13 @@ Kolappuram authorities manage law and order, local governance, and public welfar
                 <label class="custom-checkbox flex items-start">
                   <input type="checkbox" class="mt-1" />
                   <span class="checkmark"></span>
-                  <span class="ml-8 text-gray-700">
+                  <span class="ml-8 text-gray-700 dark:text-gray-300">
                     I agree to receive updates about Kolappuram experiences and special offers.
                   </span>
                 </label>
               </div>
 
-              <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg">
+              <button class="cta-button px-8 py-3 rounded-button hover:shadow-lg ripple">
                 Send Message
               </button>
             </form>
@@ -1760,256 +2545,539 @@ Kolappuram authorities manage law and order, local governance, and public welfar
     </section>
 
     <!-- Newsletter Section -->
-    <section class="py-16 section-dark gold-texture" data-aos="fade-up">
-      <div class="container mx-auto px-6">
-        <div class="max-w-4xl mx-auto text-center">
-          <h2 class="text-3xl font-semibold mb-4 gold-accent">
-            Join Our Community
-          </h2>
-          <p class="mb-8 text-gray-300">
-            Subscribe to receive exclusive offers, insider tips, and the latest news about Kolappuram experiences.
-          </p>
+    <section class="py-16 section-dark gold-texture" data-aos="f<section class="py-16 section-dark gold-texture" data-aos="fade-up">
+  <div class="container mx-auto px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-semibold mb-4 gold-accent">
+        Join Our Community
+      </h2>
+      <p class="mb-8 text-gray-300">
+        Subscribe to receive exclusive offers, insider tips, and the latest news about Kolappuram experiences.
+      </p>
 
-          <form class="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
-            <input
-              type="email"
-              placeholder="Your email address"
-              class="flex-grow p-3 rounded-lg border-none focus:outline-none text-gray-800"
-            />
-            <button
-              class="bg-primary text-white px-6 py-3 rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap hover:shadow-lg"
-            >
-              Subscribe
-            </button>
-          </form>
+      <form class="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+        <input
+          type="email"
+          placeholder="Your email address"
+          class="flex-grow p-3 rounded-lg border-none focus:outline-none text-gray-800 dark:text-gray-200 dark:bg-gray-700"
+        />
+        <button
+          class="bg-primary text-white px-6 py-3 rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap hover:shadow-lg ripple"
+        >
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Floating Action Button -->
+<div class="fab ripple" id="fab">
+  <i class="ri-customer-service-line"></i>
+</div>
+
+<!-- Footer -->
+<footer class="bg-secondary text-white pt-16 pb-8 gold-texture">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div data-aos="fade-up" data-aos-delay="100">
+        <h3 class="text-2xl font-bold text-white mb-6">KOLAPPURAM</h3>
+        <p class="text-gray-400 mb-6">
+          Curating exceptional experiences in Kerala's hidden gem, blending tradition with luxury.
+        </p>
+        <div class="flex space-x-4">
+          <a href="https://www.facebook.com/share/18rnEd5ikY/" class="social-icon w-10 h-10 rounded-full flex items-center justify-center ripple">
+            <i class="ri-facebook-fill"></i>
+          </a>
+          <a href="https://www.instagram.com/kolappuram_live?igsh=cWVkZ2NycGhwZ25t" class="social-icon w-10 h-10 rounded-full flex items-center justify-center ripple">
+            <i class="ri-instagram-line"></i>
+          </a>
+          <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center ripple">
+            <i class="ri-twitter-x-line"></i>
+          </a>
+          <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center ripple">
+            <i class="ri-youtube-line"></i>
+          </a>
         </div>
       </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-secondary text-white pt-16 pb-8 gold-texture">
-      <div class="container mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          <div data-aos="fade-up" data-aos-delay="100">
-            <h3 class="text-2xl font-bold text-white mb-6">KOLAPPURAM</h3>
-            <p class="text-gray-400 mb-6">
-              Curating exceptional experiences in Kerala's hidden gem, blending tradition with luxury.
-            </p>
-            <div class="flex space-x-4">
-              <a href="https://www.facebook.com/share/18rnEd5ikY/" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
-                <i class="ri-facebook-fill"></i>
-              </a>
-              <a href="https://www.instagram.com/kolappuram_live?igsh=cWVkZ2NycGhwZ25t" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
-                <i class="ri-instagram-line"></i>
-              </a>
-              <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
-                <i class="ri-twitter-x-line"></i>
-              </a>
-              <a href="#" class="social-icon w-10 h-10 rounded-full flex items-center justify-center">
-                <i class="ri-youtube-line"></i>
-              </a>
-            </div>
-          </div>
+      <div data-aos="fade-up" data-aos-delay="200">
+        <h4 class="text-lg font-semibold mb-6 gold-accent">Quick Links</h4>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">About Kolappuram</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Accommodations</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Dining Experiences</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Cultural Activities</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Gallery</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Contact Us</a></li>
+        </ul>
+      </div>
 
-          <div data-aos="fade-up" data-aos-delay="200">
-            <h4 class="text-lg font-semibold mb-6 gold-accent">Quick Links</h4>
-            <ul class="space-y-3">
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Kolappuram</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Accommodations</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Dining Experiences</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Cultural Activities</a></li>
-             
+      <div data-aos="fade-up" data-aos-delay="300">
+        <h4 class="text-lg font-semibold mb-6 gold-accent">Contact</h4>
+        <ul class="space-y-3">
+          <li class="flex items-start">
+            <i class="ri-map-pin-line text-primary mr-3 mt-1"></i>
+            <span class="text-gray-400">
+              Kolappuram, AR Nagar P.O,<br>Malappuram, Kerala – 676305
+            </span>
+          </li>
+          <li class="flex items-start">
+            <i class="ri-phone-line text-primary mr-3 mt-1"></i>
+            <span class="text-gray-400">+91 93884 03220</span>
+          </li>
+          <li class="flex items-start">
+            <i class="ri-mail-line text-primary mr-3 mt-1"></i>
+            <span class="text-gray-400">info@kolappuramelegance.com</span>
+          </li>
+        </ul>
+      </div>
 
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Gallery</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
-            </ul>
-          </div>
+      <div data-aos="fade-up" data-aos-delay="400">
+        <h4 class="text-lg font-semibold mb-6 gold-accent">Explore Kerala</h4>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Malappuram District</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Backwaters</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Ayurveda Retreats</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Kerala Cuisine</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Festivals</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors animated-underline">Travel Tips</a></li>
+        </ul>
+      </div>
+    </div>
 
-          <div data-aos="fade-up" data-aos-delay="300">
-            <h4 class="text-lg font-semibold mb-6 gold-accent">Contact</h4>
-            <ul class="space-y-3">
-              <li class="flex items-start">
-                <i class="ri-map-pin-line text-primary mr-3 mt-1"></i>
-                <span class="text-gray-400">
-                  Kolappuram, AR Nagar P.O,<br>Malappuram, Kerala – 676305
-                </span>
-              </li>
-              <li class="flex items-start">
-                <i class="ri-phone-line text-primary mr-3 mt-1"></i>
-                <span class="text-gray-400">+91 93884 03220</span>
-              </li>
-              <li class="flex items-start">
-                <i class="ri-mail-line text-primary mr-3 mt-1"></i>
-                <span class="text-gray-400">info@kolappuramelegance.com</span>
-              </li>
-            </ul>
-          </div>
-
-          <div data-aos="fade-up" data-aos-delay="400">
-            <h4 class="text-lg font-semibold mb-6 gold-accent">Explore Kerala</h4>
-            <ul class="space-y-3">
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Malappuram District</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Backwaters</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Ayurveda Retreats</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Kerala Cuisine</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Festivals</a></li>
-              <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Travel Tips</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="border-t border-gray-700 mt-12 pt-8">
-          <div class="flex flex-col md:flex-row justify-between items-center">
-            <p class="text-gray-500 mb-4 md:mb-0">
-              © 2025 Kolappuram Elegance. All rights reserved.
-            </p>
-            <div class="flex space-x-6">
-              <a href="#" class="text-gray-500 hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" class="text-gray-500 hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" class="text-gray-500 hover:text-white transition-colors">Sitemap</a>
-            </div>
-          </div>
+    <div class="border-t border-gray-700 mt-12 pt-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-500 mb-4 md:mb-0">
+          © 2025 Kolappuram Elegance. All rights reserved.
+        </p>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-500 hover:text-white transition-colors animated-underline">Privacy Policy</a>
+          <a href="#" class="text-gray-500 hover:text-white transition-colors animated-underline">Terms of Service</a>
+          <a href="#" class="text-gray-500 hover:text-white transition-colors animated-underline">Sitemap</a>
         </div>
       </div>
-    </footer>
+    </div>
+  </div>
+</footer>
 
-    <!-- Back to Top Button -->
-    <button
-      class="fixed bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:scale-110"
-      id="backToTop"
-    >
-      <i class="ri-arrow-up-line text-xl"></i>
-    </button>
+<!-- Back to Top Button -->
+<button
+  class="fixed bottom-6 right-6 w-12 h-12 bg-primary text-white rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:scale-110 ripple"
+  id="backToTop"
+ style="margin-right: 250px; height: 60px; width: 60px;">
+  <i class="ri-arrow-up-line text-xl"></i>
+</button>
+<!-- Put this on your page BEFORE the script below -->
+<div id="webchat" style=""></div>
+<!-- AOS Animation Library -->
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<!-- Particles.js Library -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+  // Initialize AOS animation library
+  AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true,
+    mirror: false
+  });
 
-    <!-- AOS Animation Library -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-      // Initialize AOS animation library
-      AOS.init({
-        duration: 800,
-        easing: 'ease-in-out',
-        once: true,
-        mirror: false
-      });
+  // Preloader
+  window.addEventListener('load', function() {
+    const preloader = document.querySelector('.preloader');
+    setTimeout(() => {
+      preloader.classList.add('fade-out');
+    }, 1000);
+  });
 
-      document.addEventListener("DOMContentLoaded", function () {
-        // Mobile Menu Toggle
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuClose = document.getElementById('mobile-menu-close');
-        
-        mobileMenuToggle.addEventListener('click', function() {
-          mobileMenu.classList.add('open');
-          document.body.style.overflow = 'hidden';
+  // Mobile Menu Toggle
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+  
+  mobileMenuToggle.addEventListener('click', function() {
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+  
+  mobileMenuClose.addEventListener('click', function() {
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+  
+  // Close menu when clicking on links
+  const mobileLinks = mobileMenu.querySelectorAll('a');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Theme Toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+  
+  function toggleTheme(isDark) {
+    if (isDark) {
+      document.body.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }
+  
+  // Check for saved theme preference
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    toggleTheme(true);
+    themeToggle.checked = true;
+    mobileThemeToggle.checked = true;
+  } else if (savedTheme === 'light') {
+    toggleTheme(false);
+    themeToggle.checked = false;
+    mobileThemeToggle.checked = false;
+  }
+  
+  // Listen for theme toggle changes
+  themeToggle.addEventListener('change', function() {
+    toggleTheme(this.checked);
+    mobileThemeToggle.checked = this.checked;
+  });
+  
+  mobileThemeToggle.addEventListener('change', function() {
+    toggleTheme(this.checked);
+    themeToggle.checked = this.checked;
+  });
+
+  // Sticky Navbar
+  const navbar = document.querySelector(".navbar");
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 50) {
+      navbar.classList.add("scrolled");
+    } else {
+      navbar.classList.remove("scrolled");
+    }
+  });
+
+  // Scroll Progress Indicator
+  const scrollProgress = document.querySelector('.scroll-progress');
+  window.addEventListener('scroll', function() {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
+    const progress = (scrollTop / (scrollHeight - clientHeight)) * 100;
+    scrollProgress.style.width = progress + '%';
+  });
+
+  // Back to Top Button
+  const backToTopButton = document.getElementById("backToTop");
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 300) {
+      backToTopButton.classList.add("opacity-100");
+      backToTopButton.classList.remove("invisible");
+    } else {
+      backToTopButton.classList.remove("opacity-100");
+      backToTopButton.classList.add("invisible");
+    }
+  });
+
+  backToTopButton.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+
+  // Smooth Scroll for Navigation Links
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const targetId = this.getAttribute("href");
+      if (targetId === "#") return;
+
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: "smooth",
         });
-        
-        mobileMenuClose.addEventListener('click', function() {
-          mobileMenu.classList.remove('open');
-          document.body.style.overflow = '';
-        });
-        
-        // Close menu when clicking on links
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-          link.addEventListener('click', function() {
-            mobileMenu.classList.remove('open');
-            document.body.style.overflow = '';
-          });
-        });
+      }
+    });
+  });
 
-        // Sticky Navbar
-        const navbar = document.querySelector(".navbar");
-        window.addEventListener("scroll", function () {
-          if (window.scrollY > 50) {
-            navbar.classList.add("scrolled");
-          } else {
-            navbar.classList.remove("scrolled");
-          }
-        });
+  // Ripple Effect
+  const buttons = document.querySelectorAll('.ripple');
+  buttons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      const x = e.clientX - e.target.getBoundingClientRect().left;
+      const y = e.clientY - e.target.getBoundingClientRect().top;
+      
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple-effect');
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
 
-        // Back to Top Button
-        const backToTopButton = document.getElementById("backToTop");
-        window.addEventListener("scroll", function () {
-          if (window.scrollY > 300) {
-            backToTopButton.classList.add("opacity-100");
-            backToTopButton.classList.remove("invisible");
-          } else {
-            backToTopButton.classList.remove("opacity-100");
-            backToTopButton.classList.add("invisible");
-          }
-        });
+  // Testimonial slider
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.kolappuram-slide');
+  const dots = document.querySelectorAll('#testimonial-dots button');
+  
+  function showSlide(n) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('bg-primary'));
+    
+    currentSlide = (n + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('bg-primary');
+  }
+  
+  // Auto-rotate testimonials
+  setInterval(() => {
+    showSlide(currentSlide + 1);
+  }, 5000);
 
-        backToTopButton.addEventListener("click", function () {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
-        });
+  // Image Magnifier
+  const magnifierContainers = document.querySelectorAll('.magnifier-container');
+  magnifierContainers.forEach(container => {
+    const img = container.querySelector('img');
+    const glass = container.querySelector('.magnifier-glass');
+    
+    container.addEventListener('mousemove', moveMagnifier);
+    container.addEventListener('mouseenter', () => {
+      glass.style.opacity = '1';
+    });
+    container.addEventListener('mouseleave', () => {
+      glass.style.opacity = '0';
+    });
+    
+    function moveMagnifier(e) {
+      e.preventDefault();
+      
+      const containerRect = container.getBoundingClientRect();
+      let x = e.clientX - containerRect.left;
+      let y = e.clientY - containerRect.top;
+      
+      // Prevent magnifier from going outside the image
+      if (x < 0) x = 0;
+      if (y < 0) y = 0;
+      if (x > containerRect.width) x = containerRect.width;
+      if (y > containerRect.height) y = containerRect.height;
+      
+      // Position the magnifier glass
+      glass.style.left = (x - glass.offsetWidth / 2) + 'px';
+      glass.style.top = (y - glass.offsetHeight / 2) + 'px';
+      
+      // Set background properties for magnifier
+      const bgPosX = -(x * img.naturalWidth / containerRect.width - glass.offsetWidth / 2);
+      const bgPosY = -(y * img.naturalHeight / containerRect.height - glass.offsetHeight / 2);
+      
+      glass.style.backgroundImage = `url('${img.src}')`;
+      glass.style.backgroundSize = `${img.naturalWidth}px ${img.naturalHeight}px`;
+      glass.style.backgroundPosition = `${bgPosX}px ${bgPosY}px`;
+    }
+  });
 
-        // Smooth Scroll for Navigation Links
-        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-          anchor.addEventListener("click", function (e) {
-            e.preventDefault();
+  // Floating Action Button
+  const fab = document.getElementById('fab');
+  fab.addEventListener('click', function() {
+    // Here you can add functionality like opening a chat or contact form
+    alert('Contact our support team at +91 93884 03220 or info@kolappuram.com');
+  });
 
-            const targetId = this.getAttribute("href");
-            if (targetId === "#") return;
-
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-              window.scrollTo({
-                top: targetElement.offsetTop - 80,
-                behavior: "smooth",
-              });
-            }
-          });
-        });
-
-        // Gallery Lightbox
-        const galleryItems = document.querySelectorAll(".gallery-item");
-        const lightbox = document.querySelector(".lightbox");
-        const lightboxImg = lightbox.querySelector("img");
-        const lightboxClose = document.querySelector(".lightbox-close");
-
-        galleryItems.forEach((item) => {
-          item.addEventListener("click", function () {
-            const imgSrc = this.querySelector("img").src;
-            lightboxImg.src = imgSrc;
-            lightbox.classList.add("active");
-            document.body.style.overflow = "hidden";
-          });
-        });
-
-        lightboxClose.addEventListener("click", function () {
-          lightbox.classList.remove("active");
-          document.body.style.overflow = "";
-        });
-
-        lightbox.addEventListener("click", function (e) {
-          if (e.target === lightbox) {
-            lightbox.classList.remove("active");
-            document.body.style.overflow = "";
-          }
-        });
-
-        // Testimonial slider
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.kolappuram-slide');
-        const dots = document.querySelectorAll('#testimonial-dots button');
-        
-        function showSlide(n) {
-          slides.forEach(slide => slide.classList.remove('active'));
-          dots.forEach(dot => dot.classList.remove('bg-primary'));
-          
-          currentSlide = (n + slides.length) % slides.length;
-          slides[currentSlide].classList.add('active');
-          dots[currentSlide].classList.add('bg-primary');
+  // Initialize Particles.js
+  particlesJS('particles-js', {
+    "particles": {
+      "number": {
+        "value": 80,
+        "density": {
+          "enable": true,
+          "value_area": 800
         }
-        
-        // Auto-rotate testimonials
-        setInterval(() => {
-          showSlide(currentSlide + 1);
-        }, 5000);
-      });
-    </script>
-  </body>
+      },
+      "color": {
+        "value": "#D4AF37"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 3,
+        "random": true,
+        "anim": {
+          "enable": false,
+          "speed": 40,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#B38B59",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 2,
+        "direction": "none",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "grab"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 140,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 40,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 200,
+          "duration": 0.4
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true
+  });
+
+  // Language Selector
+  const languageSelector = document.querySelector('.language-selector');
+  languageSelector.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+
+  // Close language dropdown when clicking outside
+  document.addEventListener('click', function() {
+    const dropdown = document.querySelector('.language-dropdown');
+    dropdown.style.opacity = '0';
+    dropdown.style.visibility = 'hidden';
+    dropdown.style.transform = 'translateY(10px)';
+  });
+
+  // Counter Animation
+  const counters = document.querySelectorAll('.counter');
+  const speed = 200;
+
+  function animateCounters() {
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const increment = target / speed;
+      
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(animateCounters, 1);
+      } else {
+        counter.innerText = target;
+      }
+    });
+  }
+
+  // Start counter animation when scrolled to
+  window.addEventListener('scroll', function() {
+    const counterSection = document.getElementById('counter-section');
+    if (counterSection && isInViewport(counterSection)) {
+      animateCounters();
+    }
+  });
+
+  function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+
+   window.botpress.on("webchat:ready", () => {
+    window.botpress.open();
+  });
+  window.botpress.init({
+  "botId": "aa18298c-711b-41b3-af65-2336616bc7f1",
+  "configuration": {
+    "website": {},
+    "email": {},
+    "phone": {},
+    "termsOfService": {},
+    "privacyPolicy": {},
+    "color": "#5eb1ef",
+    "variant": "soft",
+    "themeMode": "light",
+    "fontFamily": "inter",
+    "radius": 1
+  },
+  "clientId": "e9e101b1-192d-4af5-a597-36b9893d1244",
+  "selector": "#webchat"
+});
+  
+</script>
+
+<script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2025/05/28/05/20250528053835-X1N04E70.js"></script>
+</body>
 </html>
